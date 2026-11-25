@@ -1,0 +1,793 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage{float}
+\emergencystretch=2em
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{approximation}[theorem]{Approximation}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{The non-leaf exponent of complete redirection trees: cavity equations on degree paths}
+\author{Marcos Costa Santos Carreira}
+\date{25 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In the complete redirection tree, each new vertex picks an existing vertex uniformly at random and attaches to a uniformly chosen neighbour of it, and the number of non-leaf vertices grows as a power of the tree size. When each non-leaf is read as an individual of a branching population in logarithmic time, the exponent is the Malthusian parameter of an Euler--Lotka equation in which the only unknown is the rate at which a non-leaf receives new leaves through its non-leaf neighbours, its credit. Using the stable law of the tree seen from a non-leaf constructed by Uzay, we show that the exponent depends on the tree only through the mean credit of a non-leaf given its numbers of leaf and non-leaf neighbours and its age. The credit passed across an edge depends on the subtree behind it only through the histories of the two endpoints, which gives cavity equations for messages on degree paths. Solved by population dynamics, with no input from simulation of the tree, these equations give the exponent to within two standard errors of the interval certified by Uzay, with standard errors of one to four parts in a hundred thousand. Sensitivity calculations show that the exponent is set by the credit of young vertices, that a model following a vertex, its parent and their children, with tables beyond, comes within one part in five thousand of the cavity solution, and that the credit carries a selection along the histories of vertices which no description by a few functions of state and age reproduces. A closed form for the exponent remains open.
+\end{abstract}
+
+\section{Introduction}
+
+Krapivsky and Redner \cite{KR2017} introduced growth by complete redirection: a new vertex selects an existing vertex uniformly at random and attaches to a uniformly random neighbour of it. Almost all vertices become leaves, and the number $C_N$ of non-leaves grows as $N^{\mu}$ with $\mu\approx0.566$ \cite{KR2017,KR2023}. Addario-Berry, Briend, Devroye, Donderwinkel, Kerriou and Lugosi \cite{ABDDKL} named the model the random friend tree and proved almost-sure bounds $0.1009\le\mu\le0.9142$. Hartle, Krapivsky, Redner and Zhang \cite{HKRZ2026} solved related models exactly. Uzay \cite{Uzay2026,UzayR3} proves that the exponent of $\mathbb{E}[C_N]$ exists, that $C_N/N^\mu$ converges almost surely to a positive random variable and that the fraction of non-leaves of each degree converges, and, with computer assistance, that $0.565713486\le\mu\le0.565736987$; his simulations of trees up to $8\times10^{13}$ vertices give $\mu=0.5657230$ with standard error $0.0000032$, which we use as the reference value. Long \cite{LongKernel} characterizes $\mu$ by the generation growth of discounted birth sums from a newborn non-leaf whose parent is replaced by an inert stub, proves that $\mu$ is computable, and certifies $\mu\le0.5664485422$; Uzay \cite{UzayR3} characterizes $\mu$ through a compact positive operator on marks of newborn non-leaves. These results, which appeared while the work reported here was in progress, have been checked by AI models and not by human referees.
+
+Each non-leaf can be read as an individual of a branching population in logarithmic time, which gives birth when one of its leaves becomes a non-leaf; $\mu$ is then the Malthusian parameter of an Euler--Lotka equation. The equation involves one quantity that depends on the neighbours of a non-leaf, its credit: the rate at which it receives new leaves by redirection from its non-leaf neighbours. Sharing the credit equally among non-leaf neighbours gives $\mu=0.568842$, which exceeds the reference by $0.0031$ (Section~\ref{sec:closures}). This paper asks what the closure misses and what determines $\mu$. It does not give a closed form for $\mu$. Its content, with the status of each part, is as follows.
+\begin{enumerate}
+\item Reduction to the credit (Section~\ref{sec:exact}). A non-leaf driven by its conditional mean credit given state and age has the same law of state at each age as in the tree (Proposition~\ref{prop:forward}). Combined with the eigenmeasure of the tree seen from a non-leaf constructed by Uzay, which represents a typical non-leaf as a newborn observed at an exponential age (Theorem~\ref{thm:uzay}, Lemma~\ref{lem:age}), this gives $\mu$ as the root of an Euler--Lotka equation in age that involves the environment only through the one function $C(s,a)$ (Theorem~\ref{thm:ELage}). The characterizations of Long and Uzay act on whole environments; the reduction to one function of state and age appears to be new.
+\item Closures (Section~\ref{sec:closures}). Equal sharing, and a neighbourhood model that follows a vertex with its children and its parent from the parent's creation; the second gives $\mu$ within $0.00006$ of the reference with no input from simulation of the tree, below the certified interval. Both are approximations.
+\item Cavity equations on degree paths (Section~\ref{sec:cavity}). On path space, given the trajectories of a non-leaf and of its parent, the trajectories of its children have a law that is the same for every non-leaf and does not depend on the rest of the tree (Theorem~\ref{prop:subtree}); the law is given by cavity functions that satisfy an exact recursion. We solve this recursion numerically for long horizons, by population dynamics with exact likelihood ratios between paths. Seven runs give $0.565694\pm0.000042$ from the Euler--Lotka equation and $0.565755\pm0.000012$ from the ratio equations. The first is consistent with Uzay's certified interval; the second is above its upper end by $0.000018$, $1.5$ standard errors, and above the reference value by $0.000032$, $2.7$ standard errors; the cause is not located (Open problem~\ref{op:offset}). The certified interval is narrower than these standard errors, so the solution checks the equations and does not improve the value of $\mu$.
+\item Structure of the credit (Section~\ref{sec:dynamics}). Observations from the solution: the exponent responds to the credit of vertices in their first three units of age and not to that of vertices of degree $50$ or more; and the credit carries a selection along the histories of vertices that no description by a few functions of state and age reproduces at the precision needed. The last observation is the reason we do not find a closed form.
+\end{enumerate}
+The code and the result files are in a public repository \cite{Repo}; Appendix~\ref{app:files} lists them. Appendices~\ref{app:exact}--\ref{app:earlier} collect results on the same model that the main text does not use: the exact one-step relations of the discrete growth, the related models DAN, PAN and VAN, a closure that treats new non-leaves exactly, exact distributions for small trees with a comparison with the certified bracket, and a summary of the author's work of 2022--2023.
+
+\section{Setting and exact results}\label{sec:exact}
+
+\subsection{Growth rule and continuous time}
+
+\begin{definition}[Growth rule]
+Let $T_2$ be the tree with two vertices and one edge. Given a tree $T_N$ on the vertex set $\{1,\dots,N\}$, choose a vertex $V_N$ uniformly at random, then a neighbour $W_N$ of $V_N$ uniformly at random, and let $T_{N+1}$ be $T_N$ with the vertex $N+1$ and the edge $\{W_N,N+1\}$ added.
+\end{definition}
+
+\begin{definition}[States and credit]
+A vertex is a \emph{leaf} if its degree is $1$ and a \emph{non-leaf} otherwise; $C_N$ is the number of non-leaves of $T_N$. For a non-leaf $v$, $\ell(v)$ is the number of leaves adjacent to $v$, $\kappa(v)$ the number of non-leaves adjacent to $v$, $d(v)=\ell(v)+\kappa(v)$ its degree, and $(\ell(v),\kappa(v))$ its \emph{state}. The \emph{credit} of $v$ is $\Gamma(v)=\sum_{u}1/d(u)$, the sum over the non-leaves $u$ adjacent to $v$.
+\end{definition}
+
+\begin{lemma}[Structure]\label{lem:structure}
+Let $N\ge3$. (i) Every leaf of $T_N$ is adjacent to exactly one vertex, which is a non-leaf. (ii) The non-leaves induce a non-empty subtree. (iii) If $C_N\ge2$, every non-leaf has $\kappa\ge1$. (iv) The number of leaves is $\sum_v\ell(v)$, the sum over the non-leaves. (v) $\Gamma(v)\le\kappa(v)/2$ for every non-leaf $v$.
+\end{lemma}
+
+\begin{proof}
+(i) Two adjacent leaves would form a component with two vertices, which is impossible in a tree with $N\ge3$ vertices. (ii) Such a tree has a vertex of degree at least $2$; the interior vertices of a path have degree at least $2$, so the path between two non-leaves uses only non-leaves, and the induced subgraph is connected and acyclic. (iii) A tree with at least two vertices has no isolated vertex. (iv) Each leaf is counted once, by (i). (v) Every non-leaf has degree at least $2$, so each term of $\Gamma(v)$ is at most $1/2$.
+\end{proof}
+
+\begin{definition}[Continuous-time redirection]
+Start from $T_2$ and give every vertex an independent Poisson clock of rate $1$, started when the vertex is created. When the clock of $v$ rings, a uniform neighbour $w$ of $v$ is chosen and a new leaf is attached to $w$. Let $\mathcal T(t)$ be the tree at time $t$, $N(t)$ its number of vertices and $C(t)$ its number of non-leaves.
+\end{definition}
+
+\begin{proposition}[Poissonization]\label{prop:poisson}
+The sequence of distinct trees visited by $\mathcal T(t)$ has the law of $(T_N)_{N\ge2}$. The process $N(t)$ is a Yule process of rate $1$ started from $2$, and $e^{-t}N(t)$ converges almost surely to a random variable with the Gamma law of shape $2$ and scale $1$.
+\end{proposition}
+
+\begin{proof}
+When the tree has $N$ vertices, the next clock to ring is uniform among them and independent of the past, by the memoryless property of independent exponential clocks; the chosen neighbour and the attachment are then those of the growth rule. Each ring adds one vertex and the total ring rate is $N(t)$, so $N$ is a Yule process of rate $1$ started from $2$, and for such a process $e^{-t}N(t)$ converges almost surely to a Gamma variable of shape $2$ and scale $1$.
+\end{proof}
+
+Hence $t=\ln N(t)+O(1)$ almost surely, and growth exponents in $t$ and in $\ln N$ coincide. From now on we work in continuous time.
+
+\begin{lemma}[Local rates]\label{lem:local}
+A non-leaf $v$ in state $(\ell,\kappa)$ gains a leaf at rate $\ell+\Gamma(v)$, moving to $(\ell+1,\kappa)$, and gives birth at rate $\ell/(\ell+\kappa)$: one of its leaves becomes a non-leaf in state $(1,1)$ adjacent to $v$, and $v$ moves to $(\ell-1,\kappa+1)$. No other event changes the state of $v$; its degree and its number of non-leaf neighbours never decrease.
+\end{lemma}
+
+\begin{proof}
+A leaf of $v$ rings at rate $1$ and its only neighbour is $v$; a non-leaf neighbour $u$ of $v$ rings at rate $1$ and chooses $v$ with probability $1/d(u)$; $v$ rings at rate $1$ and chooses a leaf with probability $\ell/d(v)$, and the leaf receives a new leaf of its own, which makes it a non-leaf with one leaf and one non-leaf neighbour. Rings of other vertices do not change the neighbourhood of $v$. Leaf gains raise $d$; births keep $d$ and raise $\kappa$.
+\end{proof}
+
+We call a non-leaf created by a birth of $v$ a \emph{child} of $v$, and $v$ its \emph{parent}. Every non-leaf except the first is created by a birth, in state $(1,1)$. The \emph{age} of a non-leaf $v$ created at time $\tau_v$ is $a=t-\tau_v$, and $Y_v(a)$ and $\Gamma_v(a)$ denote its state and credit at time $\tau_v+a$.
+
+\subsection{Forward equation and Euler--Lotka equation in age}
+
+The leaf gains of a non-leaf depend on its neighbours through $\Gamma_v$ only; its births depend on its own state. Replacing $\Gamma_v(a)$ by its conditional mean given the state keeps the law of the state at each age.
+
+\begin{proposition}[Forward equation with the conditional credit]\label{prop:forward}
+Call the first non-leaf the \emph{root}. Let $B\subset[0,\infty)$ be a Borel set such that the expected number $n_B$ of non-root non-leaves created at times in $B$ is positive and finite. For $a\ge0$ and a state $s=(\ell,\kappa)$ let
+\[
+P_a(s)=\frac1{n_B}\,\mathbb E\sum_v\mathbf 1\{\tau_v\in B,\ Y_v(a)=s\},\qquad
+C(s,a)=\frac{\mathbb E\sum_v\mathbf 1\{\tau_v\in B,\ Y_v(a)=s\}\,\Gamma_v(a)}{\mathbb E\sum_v\mathbf 1\{\tau_v\in B,\ Y_v(a)=s\}},
+\]
+the sums over the non-root non-leaves $v$ ever created, with $C(s,a)=0$ when the denominator vanishes. Let $X$ be the time-inhomogeneous Markov chain started at $(1,1)$ that at age $a$ jumps from $(\ell,\kappa)$ to $(\ell+1,\kappa)$ at rate $\ell+C((\ell,\kappa),a)$ and to $(\ell-1,\kappa+1)$ at rate $\ell/(\ell+\kappa)$. Then $\mathbb P(X(a)=s)=P_a(s)$ for all $a\ge0$ and all states $s$.
+\end{proposition}
+
+\begin{proof}
+Fix a non-root non-leaf $v$; it is created in state $(1,1)$, and the event $\{\tau_v\in B\}$ is determined at its creation. By Lemma~\ref{lem:local}, after its creation $Y_v$ jumps from $s^-=(\ell-1,\kappa)$ to $s$ with intensity $\ell-1+\Gamma_v$, from $s^\circ=(\ell+1,\kappa-1)$ to $s$ with intensity $(\ell+1)/(\ell+\kappa)$, and out of $s$ with intensity $\ell+\Gamma_v+\ell/(\ell+\kappa)$. These intensities are at most the degree, since $\Gamma_v\le\kappa/2$, and the degree, which grows at rate at most itself, is dominated by a Yule process, so the numbers of jumps have finite expectation on bounded age intervals. Taking expectations of the compensated jump counts on $\{\tau_v\in B\}$ and summing over $v$ gives, for every $a$,
+\[
+P_a(s)-\delta_{(1,1)}(s)=\int_0^a\Bigl[\bigl(\ell-1+C(s^-,a')\bigr)P_{a'}(s^-)+\frac{\ell+1}{\ell+\kappa}P_{a'}(s^\circ)-\Bigl(\ell+C(s,a')+\frac{\ell}{\ell+\kappa}\Bigr)P_{a'}(s)\Bigr]da',
+\]
+where each expectation involving $\Gamma_v$ has been written as $C$ times $P$ by the definition of $C$. This is the forward equation of $X$, which the law of $X(a)$ also satisfies. The solution is unique: the equation for the states of degree $n$ involves only states of degree $n-1$ and $n$, and for each $n$ it is a finite linear system with measurable coefficients bounded by $n$; by induction on $n$ the solution is determined on every degree.
+\end{proof}
+
+The proof of Proposition~\ref{prop:forward} uses only the local rates of Lemma~\ref{lem:local} for the tracked non-leaves and the bound $\Gamma_v\le\kappa/2$. It applies without change to a single non-leaf tracked from its creation in any environment that then evolves by the same local rules, with any law of the initial environment: $P_a$ and $C(s,a)$ are then the law of its state at age $a$ and its conditional mean credit, and the chain $X$ with credit $C$ has the same law of state at every age.
+
+The environment we need is the one constructed by Uzay \cite{UzayR3}. We state the part of his results that we use, in his notation. Let $\mathcal G$ be the space of locally finite rooted trees of non-leaves, each vertex marked by its number of leaves, with the topology of agreement on balls. For $(G,o)\in\mathcal G$ the dynamics of Lemma~\ref{lem:local} run on $G$; the \emph{cell} of $o$ at time $t$ consists of $o$ and the non-leaves created by promotions of members of the cell after time $0$. For bounded continuous $f$ on $\mathcal G$ define
+\[
+ Q_tf(G,o)=\mathbb E\sum_{x\in\mathrm{cell}_t(o)}f(G_t,x),\qquad S_tf(G,o)=\mathbb E f(G_t,o),\qquad Bf(G,o)=\frac{\ell_o}{d_o}\,f(G^{o},v),
+\]
+where $G^o$ is the environment just after a promotion by $o$ and $v$ is the new non-leaf, in state $(1,1)$ with parent $o$.
+
+\begin{theorem}[Uzay]\label{thm:uzay}
+(i) There is a Borel probability $\pi$ on $\mathcal G$ with $\pi Q_t=e^{\mu t}\pi$ for all $t\ge0$ \cite[Lemma~``Construction and tightness of the spatial law'']{UzayR3}. (ii) For bounded continuous $f\ge0$, $Q_tf=S_tf+\int_0^tQ_uBS_{t-u}f\,du$ \cite[proof of Theorem~``Fixed-degree means'']{UzayR3}.
+\end{theorem}
+
+Both parts are proved in \cite{UzayR3} and its sources, which have been checked by AI models of two other families and by no human referee. Part (ii) is a first-moment renewal identity: every member of the cell other than $o$ is created by a promotion of a member. We have read the construction of $\pi$ and checked the consequence below.
+
+\begin{lemma}[Age representation]\label{lem:age}
+$\pi B\mathbf 1=\mu$, so $\beta=\mu^{-1}\pi B$ is a probability on environments of a newly created non-leaf, and for bounded continuous $f$,
+\[
+ \pi f=\int_0^\infty\mu e^{-\mu a}\,\beta S_af\,da .
+\]
+\end{lemma}
+
+\begin{proof}
+Apply $\pi$ to part (ii) of Theorem~\ref{thm:uzay} and use part (i): $e^{\mu t}\pi f=\pi S_tf+\int_0^te^{\mu u}\pi BS_{t-u}f\,du$. Divide by $e^{\mu t}$ and substitute $a=t-u$: $\pi f=e^{-\mu t}\pi S_tf+\int_0^te^{-\mu a}\pi BS_af\,da$. For $f\ge0$: since $|S_tf|\le\|f\|_\infty$, the first term tends to $0$, and monotone convergence gives $\pi f=\int_0^\infty e^{-\mu a}\pi BS_af\,da$; a general bounded continuous $f$ is the difference of two such functions. With $f=\mathbf 1$, $S_a\mathbf 1=\mathbf 1$ gives $1=\pi B\mathbf 1/\mu$.
+\end{proof}
+
+Under $\pi$, then, the root is a newly created non-leaf whose environment at creation has law $\beta$, observed at an independent age with the exponential law of rate $\mu$. This is the form of the stable population law of Jagers and Nerman \cite[Section~7]{JN1984}, whose theorem assumes independent and identically distributed reproduction; here the lives of neighbouring non-leaves are dependent, and the representation comes from Theorem~\ref{thm:uzay}.
+
+\begin{theorem}[Euler--Lotka equation in age]\label{thm:ELage}
+Track the new non-leaf from its creation, with initial environment of law $\beta$. Let $P_a$ be the law of its state at age $a$ and $C(s,a)$ its conditional mean credit given state $s$ at age $a$. Then $P_a$ is the law at age $a$ of the chain $X$ of Proposition~\ref{prop:forward} with credit rate $C(s,a)$, and
+\[
+ 1=\int_0^\infty e^{-\mu a}\,\beta(a)\,da,\qquad \beta(a)=\sum_sP_a(s)\frac{\ell}{\ell+\kappa}.
+\]
+In particular $\mu$ is a function of the conditional mean credit $C(s,a)$ alone.
+\end{theorem}
+
+\begin{proof}
+The first claim is Proposition~\ref{prop:forward} in the form stated after it. For the equation, let $b(G,o)=\ell_o/d_o$, a bounded continuous function on $\mathcal G$. Then $B\mathbf 1=b$, so $\pi b=\pi B\mathbf1=\mu$ by Lemma~\ref{lem:age}, and the same lemma with $f=b$ gives $\pi b=\int_0^\infty\mu e^{-\mu a}\beta S_ab\,da$, where $\beta S_ab=\beta(a)$. Dividing by $\mu$ gives the equation. Given $C$, Proposition~\ref{prop:forward} determines $P_a$ and hence $\beta(a)$, and $\int_0^\infty e^{-\mu a}\beta(a)\,da$ is strictly decreasing in $\mu$ because $\beta(0)=1/2$ and $\beta$ is continuous.
+\end{proof}
+
+\begin{remark}
+When $C$ depends on the state only (a closure, Section~\ref{sec:closures}), $X$ is a time-homogeneous chain and the lives of distinct non-leaves are independent copies of it. Theorem~\ref{thm:ELage} removes the closure: whatever the dependence between neighbours, the exponent is fixed by the one function $C(s,a)$, the mean credit of a newly created non-leaf given its state and age. The rest of the paper is about this function. Uzay \cite[Theorem~``Compact reproduction kernel'']{UzayR3} characterizes $\mu$ as the critical discount of a compact positive operator on marks of newborn non-leaves, and Long \cite{LongKernel} characterizes it as the discount at which the generation growth rate of discounted birth sums from an \emph{inert newborn} (a new non-leaf whose parent is replaced by a stub that counts in its degree and sends no leaves) equals one. Both act on whole environments; Theorem~\ref{thm:ELage} reduces the dependence on the environment to one function of state and age.
+\end{remark}
+
+\begin{corollary}[Parent at a birth]\label{cor:parent}
+Under $\beta$, the parent of the new non-leaf is, at the promotion, the root of a sample of $\pi$ weighted by its birth rate $\ell/d$. In the age representation of Lemma~\ref{lem:age}, its age $A$ at the birth has density $e^{-\mu A}\beta(A)$ on $[0,\infty)$, and given $A$ its state just before the birth is $s$ with probability $P_A(s)\,\ell/((\ell+\kappa)\beta(A))$.
+\end{corollary}
+
+\begin{proof}
+$\beta=\mu^{-1}\pi B$ and $B$ multiplies by the birth rate of the root, which gives the first statement. By Lemma~\ref{lem:age}, $\pi B=\int_0^\infty\mu e^{-\mu a}\beta S_aB\,da$, and the mass of $\beta S_aB$ on parents in state $s$ is $P_a(s)\ell/(\ell+\kappa)$. Dividing by $\mu$ gives the joint density $e^{-\mu a}P_a(s)\ell/(\ell+\kappa)$ in $(a,s)$, whose total mass is $1$ by Theorem~\ref{thm:ELage}.
+\end{proof}
+
+\section{Ratio equations and closures}\label{sec:closures}
+
+\subsection{Ratio equations}
+
+With $P_a$ and $C(s,a)$ as in Theorem~\ref{thm:ELage} define, for every state $s=(\ell,\kappa)$,
+\[
+q_s=\mu\int_0^\infty e^{-\mu a}P_a(s)\,da,\qquad h_s=\mu\int_0^\infty e^{-\mu a}C(s,a)P_a(s)\,da,\qquad c_s=h_s/q_s
+\]
+($c_s=0$ if $q_s=0$). By Lemma~\ref{lem:age}, $q_s=\pi(\text{the root is in state }s)$ and $h_s=\pi(\Gamma_o;\text{the root is in state }s)$: $q_s$ is the fraction of non-leaves in state $s$ and $h_s$ their credit per non-leaf, both in the sense of $\pi$, and $c_s$ is the mean credit of a non-leaf in state $s$. Write $d(s)=\ell+\kappa$, $s^-=(\ell-1,\kappa)$ and $s^\circ=(\ell+1,\kappa-1)$.
+
+\begin{proposition}[Ratio equations]\label{prop:ratio}
+With $q$ and $h$ as above, for every state $s$,
+\begin{equation}\label{eq:ratio}
+\Bigl(\mu+\ell+\frac{\ell}{\ell+\kappa}\Bigr)q_{s}=(\ell-1)q_{s^-}+\frac{\ell+1}{\ell+\kappa}q_{s^\circ}+h_{s^-}-h_{s}+\mu\,\mathbf{1}[s=(1,1)],
+\end{equation}
+$\sum_sq_s=1$, $\sum_sq_s\,\ell/d(s)=\mu$ and $\sum_sq_s\,\kappa/d(s)=1-\mu$. Given a table $(c_s)$ with $0\le c_s\le\kappa/2$ and given $\mu$, the system \eqref{eq:ratio} with $h_s=c_sq_s$ has a unique solution, $q_s=\mu\int_0^\infty e^{-\mu a}\,\mathbb P(X'_a=s)\,da$, where $X'$ is the chain of Proposition~\ref{prop:forward} with the credit $c_s$ in place of $C(s,a)$.
+\end{proposition}
+
+\begin{proof}
+Multiply the forward equation of Proposition~\ref{prop:forward} for $P_a$ by $\mu e^{-\mu a}$ and integrate over $a\in[0,\infty)$; the boundary terms are $-\mu P_0(s)=-\mu\mathbf 1[s=(1,1)]$ at $a=0$ and zero at infinity, and the integrals converge because the rates out of each state are bounded and $e^{-\mu a}$ is integrable. The result is \eqref{eq:ratio}. $\sum_sq_s=\mu\int_0^\infty e^{-\mu a}da=1$; $\sum_sq_s\ell/d(s)=\mu\int_0^\infty e^{-\mu a}\beta(a)\,da=\mu$ by Theorem~\ref{thm:ELage}; and $\kappa/d=1-\ell/d$. For the second part, the same transform of the forward equation of $X'$ shows that its weighted occupation solves the system. Uniqueness: order the states by $\kappa$ and then by $\ell$; the equation for $s$ involves $s^-$ (same $\kappa$, smaller $\ell$), $s^\circ$ (smaller $\kappa$) and $s$ itself with the positive coefficient $\mu+\ell+\ell/d+c_s$, so the solution is determined state by state.
+\end{proof}
+
+The proposition gives a second way to compute $\mu$ from the credit: by the state averages $c_s$, solving for the $\mu$ at which the solution of \eqref{eq:ratio} satisfies $\sum_sq_s\ell/d(s)=\mu$. We call this the estimate (R); the estimate from Theorem~\ref{thm:ELage} with $C(s,a)$ is (E). Both are exact functions of the true credit; the averages $c_s$ depend on $\mu$ through their weights, so (R) also uses $C$ by age. Computed from a finite numerical solution, the two estimates have different Monte Carlo errors (Section~\ref{sec:cavity}).
+
+\subsection{Closures}
+
+A \emph{closure} is a rule that gives the credit table from the solution itself, so that \eqref{eq:ratio} closes. Each closure below is an approximation.
+
+\begin{approximation}[Equal sharing]\label{app:equal}
+$c_s=\lambda\kappa$ for every state, with $\lambda=(1-\mu)/\sum_s\kappa q_s$, so that the total $\sum_sc_sq_s=1-\mu$ of Proposition~\ref{prop:ratio} holds.
+\end{approximation}
+
+Every non-leaf neighbour then contributes the same mean credit $\lambda$, which is the average of $1/d(u)$ over ordered pairs $(v,u)$ of adjacent non-leaves. Under a closure with credit $c_s$ depending on the state only, Proposition~\ref{prop:ratio} gives $q$ as the weighted occupation of the chain $X'$, and $\sum_sq_s\kappa/d(s)=1-\mu$ reads $1-\mu=\mu J(\mu)$ with $J(\mu)=\mathbb E\int_0^\infty e^{-\mu a}\kappa'_a/d'_a\,da$, where $(\ell'_a,\kappa'_a)=X'_a$ and $d'_a=\ell'_a+\kappa'_a$. Numerically the states are cut at a leaf count $L$; in this form the error of the cut is bounded.
+
+\begin{proposition}[Truncation bound]\label{prop:trunc}
+Let $J_L(\mu)$ be $J(\mu)$ for the chain $X'$ killed when $\ell'$ first exceeds $L$. Then $0\le J(\mu)-J_L(\mu)\le(1/\mu+1/\mu^2)/(L+1)$.
+\end{proposition}
+
+\begin{proof}
+The integrals agree before the first time $T$ at which $\ell'$ exceeds $L$. After $T$ the degree is at least $L+1$, since it never decreases, so $\kappa'_a/d'_a\le\kappa'_a/(L+1)$. Births occur at rate at most $1$, so $\mathbb E\kappa'_a\le1+a$, and $\mathbb E\int_T^\infty e^{-\mu a}\kappa'_a\,da\le\int_0^\infty e^{-\mu a}(1+a)\,da=1/\mu+1/\mu^2$.
+\end{proof}
+
+\begin{observation}[Value under equal sharing]\label{obs:equal}
+Solving \eqref{eq:ratio} with Approximation~\ref{app:equal} on $\ell\le L$, $\kappa\le100$, with $\mu$ from $1-\mu=\mu J_L(\mu)$ and $\lambda$ iterated to its fixed point, gives $\mu=0.5689913$, $0.5688699$, $0.5688482$, $0.5688435$ at $L=300$, $10^3$, $3\times10^3$, $10^4$, with $\lambda=0.2155783$ at $L=10^4$. Successive differences shrink by a factor of about $0.2$, so the closure value is $\mu=0.568842$ to within $2\times10^{-6}$, above the reference by $0.0031$.
+\end{observation}
+
+The second closure keeps the dependence of the credit on the neighbours that create it. A non-leaf receives credit from its parent and from its children; their degrees depend on their own histories and on the times of the births that created them, which are read from the history of the vertex itself.
+
+\begin{approximation}[Neighbourhood model]\label{app:nb}
+Let $R$ be the set of states of degree at most $10$. Given $\mu$, the solution $q$ of \eqref{eq:ratio}, a credit table $c$ and tables of credit by state and age from the previous iteration:
+\begin{enumerate}
+\item A non-leaf $p$ is followed from its creation in $(1,1)$ up to age $40$, together with its parent $g$ and all its children. The state of $g$ just after the birth of $p$ is drawn from the law of Corollary~\ref{cor:parent} with the tables, and $g$ gains leaves at rate $\ell_g+1/d_p$ plus its table credit less the mean credit of one child; $p$ gains leaves at rate $\ell_p+1/d_g+\sum_j1/d_j$ over its children $j$; births occur at rate $\ell/d$ for every followed vertex.
+\item A child $j$ born at the age $A$ of $p$ is followed in full with probability $\pi(A)=\min(1,e^{-\mu(A-1.5)})$ and then carries the weight $e^{-\mu A}/\pi(A)$: its own children are followed as vertices that gain leaves at rate $\ell+1/d_j$ plus the credit of their children from the age tables. Otherwise $j$ gains leaves at rate $\ell_j+1/d_p$ plus the credit of its children from the age tables. A vertex of degree $200$ or more grows deterministically.
+\item New tables: for $s\in R$, the credit and the credit by age are the means over the children followed in full, weighted by $e^{-\mu A}/\pi(A)$ and by $e^{-\mu a}$ in their age $a$ (by Corollary~\ref{cor:parent} these weights sample the births of the population). For states of degree $11$--$20$, $21$--$50$ and $51$--$200$, $c_s=\kappa\lambda_B$ with $\lambda_B$ the credit per non-leaf neighbour of $p$ itself in that band, weighted by $e^{-\mu a}$ in its age. Above degree $200$, $c_s=\kappa\lambda_{\rm big}$ with $\lambda_{\rm big}$ set by $\sum_sc_sq_s=1-\mu$.
+\item $q$ and $\mu$ are computed from \eqref{eq:ratio} with the new table, on $\ell\le3000$, $\kappa\le100$; the states with $\ell>3000$ enter through the leading-order tail $q(\ell)\propto\ell^{-(1+\mu)}$ of the occupation. The steps are iterated from equal sharing.
+\end{enumerate}
+\end{approximation}
+
+The approximations are the independence of the neighbours of the followed vertices given the followed vertices, the tables by state and age for the outermost credits, and the fixed settings (region, ages, the degree of deterministic growth). No quantity measured in a simulation of the tree enters.
+
+\begin{observation}[Value of the neighbourhood model]\label{obs:nb}
+With $6\times10^5$ followed vertices $p$ per iteration, the iteration converges in $13$ steps; at the fixed point, ten evaluations with independent random numbers give $\mu=0.565660$ with standard deviation $0.000037$, that is $\mu=0.56566\pm0.00001$. This is below the reference by $0.00006$, at $5.4$ standard errors, and below the lower end $0.565713486$ of the certified interval \cite{UzayR3} by $0.00005$; the standard error covers only the Monte Carlo noise at the fixed point; the error from the fixed settings of the model is not estimated. On the states that carry most of the occupation, the credits of the model agree with those measured in simulations of the tree at $N=10^7$ to within $0.4$ per cent.
+\end{observation}
+
+
+
+\section{Cavity equations on degree paths}\label{sec:cavity}
+
+The closures of Section~\ref{sec:closures} replace the credit of the neighbours by tables. The cavity equations keep the paths of all neighbours; they rest on an exact description of the tree on path space.
+
+\subsection{Paths and the cavity recursion}\label{sec:paths}
+
+Births change two vertices at once, the parent and the new child. Their rate depends on the parent's own state, so they can be generated by a reference process without interaction; only the leaf gains carry the interaction, and they change one vertex at a time.
+
+\begin{definition}[Slot process]\label{def:slot}
+Let $U$ be the Ulam--Harris tree: $\emptyset$ is the root and the children of $v\in U$ are $v1,v2,\dots$. Fix a horizon $t>0$. Each slot $v\in U$ has a state $X_v(s)\in\{\star\}\cup\{(\ell,\kappa):\ell,\kappa\ge0\}$ for $s\in[0,t]$, where $\star$ means not yet born; at time $0$, $X_\emptyset=(2,0)$ and $X_v=\star$ for $v\ne\emptyset$. For a born slot write $d_v=\ell_v+\kappa_v$, and let $\mathcal N_v(s)$ be the set of born slots adjacent to $v$ in $U$. The dynamics are:
+\begin{enumerate}
+\item[(G)] a born slot $v$ moves from $(\ell,\kappa)$ to $(\ell+1,\kappa)$ at rate $g_v(s)=\ell_v(s)+\sum_{u\in\mathcal N_v(s)}1/d_u(s)$;
+\item[(B)] a born slot $v$ moves from $(\ell,\kappa)$ to $(\ell-1,\kappa+1)$ at rate $\ell_v/d_v$, and at the same instant the slot $vk$, where $k$ counts the births of $v$ up to and including this one, moves from $\star$ to $(1,1)$.
+\end{enumerate}
+The trajectory of $v$ on $[0,t]$ is $X_v=(X_v(s))_{s\le t}$, and $\tau_v$ is its birth time ($\tau_\emptyset=0$, $\tau_v=\infty$ if $v$ is not born by $t$). $P$ denotes the law of the slot process.
+\end{definition}
+
+\begin{lemma}[Equivalence]\label{lem:slot}
+The born slots with their states, and the edges of $U$ between born slots, have the law of the non-leaf tree of continuous-time redirection, started from $T_3$, with the states of Lemma~\ref{lem:local}.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:local} the non-leaf tree changes only by leaf gains and births with the rates (G) and (B); a birth of $v$ turns a leaf of $v$ into a non-leaf in state $(1,1)$ adjacent to $v$, which is the next child slot of $v$. Leaves enter the dynamics only through their number, so their identities do not affect the law. The continuous-time tree started from $T_2$ reaches $T_3$ at its first ring, and from then on, by the memoryless property, it is the process started from $T_3$.
+\end{proof}
+
+\begin{definition}[Reference process]\label{def:Q}
+$Q$ is the law of the slot process in which the rate of (G) is replaced by $\ell_v+1$, with (B) unchanged. Under $Q$ the rates of a slot depend on its own state only.
+\end{definition}
+
+\begin{lemma}[Branching under $Q$]\label{lem:Q}
+There are probability kernels $q_k(dy\mid x)$, $k\ge1$, on trajectories, such that under $Q$, for every slot $v$, given $X_v=x$ the trajectories $X_{v1},X_{v2},\dots$ are independent with laws $q_1(\cdot\mid x),q_2(\cdot\mid x),\dots$, where $q_k(\cdot\mid x)=\delta_\star$ if $x$ has fewer than $k$ births. Write $q(dy\mid x)=\bigotimes_kq_k(dy_k\mid x)$, and $q^D(\cdot\mid x)$ for the law of the trajectories of all strict descendants of a slot given its trajectory $x$; $q$ and $q^D$ are the same for every slot. Moreover, for every $n\ge0$, given the trajectories of all slots of generation at most $n$, the families of trajectories of the strict descendants of the slots $c$ of generation $n$ are independent with laws $q^D(\cdot\mid X_c)$.
+\end{lemma}
+
+\begin{proof}
+Construct the process from independent Poisson random measures $\Pi_w$, $w\in U$, each a pair of Poisson random measures of unit intensity on $[0,t]\times[0,\infty)$: once born, slot $w$ makes a (G) jump at the atoms $(s,y)$ of the first with $y\le\ell_w(s-)+1$ and a (B) jump at the atoms of the second with $y\le\ell_w(s-)/d_w(s-)$. Under $Q$ these thresholds involve only the state of $w$, so $X_w=\Phi(\tau_w,\Pi_w)$ for a measurable map $\Phi$ that is the same for all slots, with $\tau_{vk}$ the time of the $k$-th birth in $X_v$. Given $X_v$, the trajectories $X_{vk}=\Phi(\tau_{vk},\Pi_{vk})$ are functions of independent measures $\Pi_{v1},\Pi_{v2},\dots$, which are independent of $X_v$; this gives the kernels. Iterating, the strict descendants of $c$ are a fixed function of $X_c$ and of the $\Pi_w$ with $w$ strictly below $c$; for distinct slots of the same generation these families of measures are disjoint, hence independent, and independent of the trajectories of generations up to $n$, which are functions of the other measures.
+\end{proof}
+
+\begin{proposition}[Density]\label{prop:density}
+$P$ is absolutely continuous with respect to $Q$ on trajectories on $[0,t]$, with $dP/dQ=\prod_{v\in U}F_v$, where $F_v=1$ if $v$ is not born by $t$ and otherwise
+\[
+F_v=\exp\Bigl(-\int_{\tau_v}^t\bigl(g_v(s)-\ell_v(s)-1\bigr)\,ds\Bigr)\prod_{s\le t:\ v\text{ has a (G) jump at }s}\frac{g_v(s-)}{\ell_v(s-)+1}.
+\]
+$F_v$ is a function of the trajectories of $v$, of its parent and of its children, and $F_v>0$.
+\end{proposition}
+
+\begin{proof}
+The two laws have the same initial state and the same (B) intensities, and differ only in the (G) intensities, $g_v$ under $P$ and $\ell_v+1>0$ under $Q$. Let $N(s)$ be the number of vertices of the tree (born slots and their leaves). Under $P$, $N$ is a Yule process of unit rate; under $Q$, $N$ increases by one at each (G) jump, at total rate $\sum_v(\ell_v+1)\le N$. In both cases $N(t)<\infty$ almost surely. Let $\tau_n=\inf\{s:N(s)>n\}$, and consider the multivariate point process of the jumps of the slot process truncated at $t\wedge\tau_n$. Before $\tau_n$ there are at most $n$ born slots and all intensities are at most $n+1$, so the product $Z_n$ of the factors $F_v$ evaluated at $t\wedge\tau_n$ is bounded (before $\tau_n$ there are at most $n$ jumps of type (G), each contributing a factor at most $n+1$, and the exponential factors are at most $e^{nt}$); as the density process of the change of intensities stopped at $t\wedge\tau_n$ it is a bounded local martingale under $Q$, hence has $Q$-expectation $1$, and by Jacod's change of measure \cite[Theorem~(4.5)]{Jacod1975} the measure $Z_n\,Q$ gives the truncated process the intensities of $P$; by the uniqueness theorem \cite[Theorem~(3.4)]{Jacod1975} it coincides with $P$ on the events determined by the truncated process. For an event $E$ determined by the trajectories on $[0,t]$, the event $E\cap\{\tau_n>t\}$ is determined by the truncated process, and on it $Z_n=\prod_vF_v$; hence $P(E\cap\{\tau_n>t\})=E_Q[\prod_vF_v;E\cap\{\tau_n>t\}]$. Letting $n\to\infty$, with $P(\tau_n>t)\to1$, $Q(\tau_n>t)\to1$ and monotone convergence, gives $P(E)=E_Q[\prod_vF_v;E]$. Finally, $g_v$ involves $\ell_v$ and $d_u$ for the born slots $u$ adjacent to $v$ (its parent and its children), and $\tau_v$ is read from the parent's trajectory; $F_v>0$ because $g_v>0$ for every born slot: a born non-root slot is adjacent to its parent, and the root has a leaf or a child.
+\end{proof}
+
+For a non-root slot $v$ we write $F_v=F(x_{\pi v},x_v,x_{\mathrm{ch}(v)})$, where $\pi v$ is the parent of $v$, $\mathrm{ch}(v)=(v1,v2,\dots)$ its child slots, and $F$ is one function for all non-root slots; $F=1$ when $x_v=\star$. For a non-root slot $c$ with parent $v$ and strict descendants $D_c$, let $W_c=\prod_{w\in\{c\}\cup D_c}F_w$, a function of $(x_v,x_c,x_{D_c})$, the same function for every $c$.
+
+\begin{definition}[Cavity function]\label{def:cavity}
+For trajectories $x_c$ of a slot and $x_v$ of its parent,
+\[
+Z(x_c,x_v)=\int q^D(dx_{D_c}\mid x_c)\,W_c(x_v,x_c,x_{D_c})\in[0,\infty].
+\]
+\end{definition}
+
+\begin{lemma}[Cavity recursion]\label{lem:cavity}
+$Z(\star,x_v)=1$, and for all trajectories
+\[
+Z(x_c,x_v)=\int q(dy\mid x_c)\,F(x_v,x_c,y)\prod_jZ(y_j,x_c).
+\]
+Under $P$, $Z(X_c,X_{\pi c})\in(0,\infty)$ almost surely for every non-root slot $c$.
+\end{lemma}
+
+\begin{proof}
+If $x_c=\star$, every slot of $D_c$ is $\star$ under $q^D$ and $W_c=1$. Otherwise $W_c=F(x_v,x_c,x_{\mathrm{ch}(c)})\prod_jW_{cj}$, where $W_{cj}$ is a function of $(x_c,x_{cj},x_{D_{cj}})$. Under $q^D(\cdot\mid x_c)$ the children have law $q(\cdot\mid x_c)$ and, given them, the families $X_{D_{cj}}$ are independent with laws $q^D(\cdot\mid x_{cj})$ (Lemma~\ref{lem:Q}); integrating the nonnegative product by Tonelli's theorem gives the recursion. By Proposition~\ref{prop:density}, $E_Q[\prod_vF_v]=1$, and by the same integration $E_Q[\prod_vF_v]=E_Q\bigl[\prod_{w\notin\{c\}\cup D_c}F_w\;Z(X_c,X_{\pi c})\bigr]$; the first factor is positive and the expectation is finite, so $Z(X_c,X_{\pi c})<\infty$ $Q$-almost surely, hence $P$-almost surely. $Z>0$ because $F>0$.
+\end{proof}
+
+\begin{theorem}[Second-order branching structure]\label{prop:subtree}
+Let $\mathcal G_n$ be the $\sigma$-algebra generated by the trajectories of the slots of generation at most $n$. Under $P$, for every $n\ge1$, given $\mathcal G_n$ the families $X_{\mathrm{ch}(v)}$, $v$ of generation $n$, are conditionally independent, and $X_{\mathrm{ch}(v)}$ has conditional law
+\[
+K(dy\mid x_v,x_{\pi v})=\frac{q(dy\mid x_v)\,F(x_{\pi v},x_v,y)\prod_kZ(y_k,x_v)}{Z(x_v,x_{\pi v})}
+\]
+at $x_v=X_v$, $x_{\pi v}=X_{\pi v}$. The kernel $K$ is the same for every non-root slot.
+\end{theorem}
+
+\begin{proof}
+Let $\varphi\ge0$ be $\mathcal G_{n+1}$-measurable. By Proposition~\ref{prop:density}, $E_P[\varphi]=E_Q[\varphi\prod_wF_w]$. The factors $F_w$ with $w$ of generation at most $n$ are $\mathcal G_{n+1}$-measurable, and the remaining ones multiply to $\prod_cW_c$ over the slots $c$ of generation $n+1$. By Lemma~\ref{lem:Q}, given $\mathcal G_{n+1}$ the families $X_{D_c}$ are independent under $Q$ with laws $q^D(\cdot\mid X_c)$, so
+\[
+E_P[\varphi]=E_Q\Bigl[\varphi\prod_{|w|\le n}F_w\prod_{|c|=n+1}Z(X_c,X_{\pi c})\Bigr],
+\]
+where $|w|$ is the generation. The same identity at level $n$, for $\mathcal G_n$-measurable $\varphi$, reads $E_P[\varphi]=E_Q[\varphi\prod_{|w|\le n-1}F_w\prod_{|v|=n}Z(X_v,X_{\pi v})]$. Under $Q$, given $\mathcal G_n$, the families $X_{\mathrm{ch}(v)}$, $|v|=n$, are independent with laws $q(\cdot\mid X_v)$ (Lemma~\ref{lem:Q}). Comparing the two identities, the conditional law of generation $n+1$ given $\mathcal G_n$ under $P$ has density
+\[
+\prod_{|v|=n}\frac{F(X_{\pi v},X_v,X_{\mathrm{ch}(v)})\prod_kZ(X_{vk},X_v)}{Z(X_v,X_{\pi v})}
+\]
+with respect to the same conditional law under $Q$. This is a product over $v$ of functions of $(X_{\pi v},X_v,X_{\mathrm{ch}(v)})$; the denominators lie in $(0,\infty)$ $P$-almost surely and each factor integrates to $1$ against $q(\cdot\mid X_v)$, by Lemma~\ref{lem:cavity}. This gives the conditional independence and the kernel $K$.
+\end{proof}
+
+At a fixed horizon, then, the non-leaf tree is a branching process whose individuals carry as type the pair (trajectory of the parent, own trajectory): given that pair, the children of a slot have the joint law $K$, and nothing else in the tree affects them. Conditioning on the slot's own trajectory alone does not give this property, because the factor $F_v$ couples the children of $v$ through $g_v$. The kernel $K$ is the reference kernel tilted by the slot's own factor and by one cavity function per child, and the cavity functions solve the recursion of Lemma~\ref{lem:cavity}, which is exact because the tree has no cycles. The rest of this section solves this recursion numerically.
+
+
+\subsection{Messages}
+
+Theorem~\ref{prop:subtree} writes the law of the children of a slot $v$, given the trajectories of $v$ and of its parent, as $K(dy\mid x_v,x_{\pi v})\propto F(x_{\pi v},x_v,y)\prod_k m_k(dy_k\mid x_v)$ with
+\[
+m_k(dy_k\mid x_v)=q_k(dy_k\mid x_v)\,Z(y_k,x_v),
+\]
+the law of the $k$-th child in the tree from which the factor $F_v$ of $v$ is removed (the cavity at $v$), up to normalisation. The children are coupled only through $F_v$, that is through the gain rate of $v$, which depends on the sum of their inverse degrees.
+
+Two properties make the messages computable. First, the slot process restricted to $[0,s]$ is the slot process with horizon $s$, so the kernels at horizon $t$ restrict to those at any $s<t$. Second, a child is created in state $(1,1)$ with no descendants, and all rates depend only on states; so, written in the age of the child (as the proof of Proposition~\ref{prop:reweight} shows), $m_k$ depends on $x_v$ only through the degree path $D$ of $v$ after the birth of the child, and it is the same function for every edge. We write $m(\cdot\mid D)$ for the law of the trajectories of a child and its descendants on its first $H$ units of age, given the degree path $D$ of its parent over the same interval, in the cavity. The upward message is the law of the trajectory of a parent, from its own creation, with its own parent and its other children, given that it creates a designated child at its age $A$; under the hypotheses of Corollary~\ref{cor:parent}, $A$ has density proportional to $e^{-\mu A}$ times the birth rate.
+
+\begin{proposition}[Reweighting a child record]\label{prop:reweight}
+Let a child $c$, its descendants and their trajectories on $[0,H]$ in the age of $c$ be a sample from $m(\cdot\mid D^{\rm ref})$. Let $t_j$ be the times of the leaf gains of $c$ and $\rho_j=\ell_c(t_j-)+\sum_g1/d_g(t_j-)$, the sum over the children $g$ of $c$, the part of its gain rate that does not come from the parent. For another parent degree path $D$ on $[0,H]$, the density of $m(\cdot\mid D)$ with respect to $m(\cdot\mid D^{\rm ref})$ at the sample is proportional to
+\[
+w=\exp\Bigl(-\int_0^H\Bigl(\frac1{D(a)}-\frac1{D^{\rm ref}(a)}\Bigr)da\Bigr)\prod_j\frac{\rho_j+1/D(t_j)}{\rho_j+1/D^{\rm ref}(t_j)} .
+\]
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:cavity}, $m(\cdot\mid D)$ is proportional to $q_k(dx_c\mid x_v)\,q^D(dx_{D_c}\mid x_c)\,W_c(x_v,x_c,x_{D_c})$. With the birth time of $c$ fixed, $q_k$ and $q^D$ do not involve the parent's path after the birth, and among the factors of $W_c=F_c\prod_{w\in D_c}F_w$ only $F_c$ involves it, through the term $1/d_v$ in the gain rate $g_c=\rho+1/d_v$ (Proposition~\ref{prop:density}). The ratio of $F_c$ under $D$ and under $D^{\rm ref}$ is $w$.
+\end{proof}
+
+The same identity reweights an upward record to a new path of its designated child, with the integral and the product taken after the age $A$ of the designation.
+
+\subsection{Large vertices}
+
+A vertex in state $(\ell,\kappa)$ gains a leaf at rate $\ell+\Gamma=d-u$, with $u=\kappa-\Gamma$, and gives birth at rate $\ell/d$, which does not change $d$. So $Z=d-u$ jumps by $+1$ at rate $Z$ and drifts at rate $-u'$. A vertex with many leaves gives birth at rate close to $1$, so $\kappa$ grows at rate close to $1$, and if its credit is close to $\lambda\kappa$, then $u'\approx1-\lambda$.
+
+\begin{approximation}[Large-vertex path]\label{app:large}
+From the time $t^*$ at which a vertex reaches degree $d^*$, its degree is $d=Z+u^*+u's$ at age $t^*+s$, where $u^*$ is its value of $u$ at $t^*$, $u'=1-\lambda$ with $\lambda=0.230$, and $Z$ follows a Yule process of rate $1$ with drift $-u'$, simulated on a grid of step $0.05$ by normal increments $Z(s+\Delta)=Z(s)e^\Delta-u'(e^\Delta-1)+\sqrt{Z(s)e^\Delta(e^\Delta-1)}\,\xi$, $\xi$ standard normal, up to $s=4$; beyond, the degree grows as $d(t^*+4)e^{s-4}$. The likelihood ratio of the vertex's path after $t^*$ under a change of its parent's path is replaced by $1$.
+\end{approximation}
+
+\begin{observation}[Checks of the large-vertex path]\label{obs:large}
+In a simulation of $2\times10^4$ vertices with the dynamics of the first generation of the solver, from $d^*=50$ and with $\lambda=0.230$ (the credit per non-leaf neighbour of the neighbourhood model in the degrees $51$--$200$): the mean of $e^{-s}d$ converges to within $0.3$ per cent of the predicted $d^*-u^*-u'$; the mean inverse degree of Approximation~\ref{app:large} agrees with the simulation within $0.1$ per cent at ages $0.25$ to $4$ after $t^*$, and the standard deviation of $d$ within $1.3$ per cent; the logarithm of the likelihood ratio of the path after $t^*$, for a doubling of the parent's degree, has mean $-5\times10^{-6}$ and standard deviation $3.6\times10^{-4}$, against $3.7\times10^{-4}$ predicted by the second-order expansion $\bigl(\int(1/D_1-1/D_2)^2/\rho\,da\bigr)^{1/2}$.
+\end{observation}
+
+\subsection{Solver}
+
+The messages are represented by weighted populations of records and solved by generations.
+\begin{enumerate}
+\item A \emph{child record} is a sample of a child $c$ from its birth to age $H$ under a reference parent path $D^{\rm ref}(a)=d_0e^a$, with $d_0$ drawn from the law of the parent's degree at a birth: it stores the reference $d_0$, the gain times of $c$ with the rates $\rho_j$ without the parent, and, if $c$ reaches degree $d^*$, the time $t^*$ and its path from Approximation~\ref{app:large}. In generation $0$, the credit $c$ receives from its own children is taken from the tables of the neighbourhood model. In generation $n+1$, the children of $c$ are records of generation $n$, drawn among those whose $d_0$ equals the degree of $c$ at the birth (degrees $11$ and above form one key), and each is reweighted to the actual path of $c$ by Proposition~\ref{prop:reweight}, over the time in which it affects $c$; the record of $c$ carries the product of these weights.
+\item A \emph{parent record} is a vertex followed from its creation (until degree $d^*$ or age $24$), with its own parent (a parent record of the previous generation, reweighted to its path; in generation $0$, a deterministic path) and its children (child records, reweighted). One of its births is designated with probability proportional to $e^{-\mu A}$, $A$ the age at the birth, and the record carries the sum of $e^{-\mu A}$ over its births as a weight. It stores the path of the vertex after the designated birth, with the rates without the designated child, and the designated child's path as the reference for later reweighting.
+\item Records are resampled to equal weights within each key (the reference degree), and the effective sample size $(\sum w)^2/(n\sum w^2)$ is recorded before each resampling.
+\item \emph{Output}: a newborn vertex $v$ is followed from creation until it reaches degree $d^*$ or age $24$, with its parent from the parent records and its children from the child records, all reweighted to its path. From the weighted output vertices, (E) is the root of $\sum_vw_v\sum_{\text{births of }v}e^{-\mu A}=\sum_vw_v$, which is the equation of Theorem~\ref{thm:ELage} written over births (births after degree $d^*$ at rate $1-\kappa/d$ along the mean large-vertex path); (R) solves the ratio equations of Proposition~\ref{prop:ratio} with the credits $c_s$ of the output vertices, weighted by $e^{-\mu a}$ in their age, for every state of degree below $d^*$, and $c_s=\kappa\lambda$ above, with $\lambda$ from the total $\sum_sc_sq_s=1-\mu$.
+\item The value of $\mu$ in the designation weights is replaced after each generation by the (R) estimate of that generation.
+\end{enumerate}
+No average over the paths of neighbours enters: every neighbour is a record with its own path, and the credits are those of the paths. The approximations are the horizon $H$, the large-vertex path above $d^*$, the finite populations, the tables of generation $0$, and in (R) the credit $\kappa\lambda$ above degree $d^*-1$. The solver also assumes that the recursion, written in the age of each vertex, has a fixed point that the generations approach; this is not proved (Open problem~\ref{op:cohort}). A check of the machinery: with generation-$0$ records, the solver reproduces a direct simulation of the same generation-$0$ model, without records or weights, within the standard errors on the states $(0,2)$, $(1,2)$, $(2,2)$, $(3,2)$ and $(0,3)$.
+
+\subsection{Results}
+
+Seven runs were made (Table~\ref{tab:runs}); the code and the settings of each are in the repository \cite{Repo}. The production run has four replicas of generations $0$--$8$, and its value is the mean of generations $6$--$8$; the other runs have two (B, D, H) or four (N30, N100, N100L) replicas of generations $0$--$5$, and their value is the mean of generations $2$--$5$. Standard errors come from the spread between replicas. The checks fixed before each run are listed in Appendix~\ref{app:checks}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llllll}
+\toprule
+Run & $d^*$ & $H$ & records & (R) & (E)\\
+\midrule
+production & $50$ & $12$ & $3\times10^5$ & $0.565758\,(23)$ & $0.565619\,(157)$\\
+B & $50$ & $12$ & $3\times10^5$ & $0.565782\,(21)$ & $0.565784\,(125)$\\
+D & $100$ & $12$ & $2\times10^5$ & $0.565756\,(37)$ & $0.565709\,(61)$\\
+H & $50$ & $16$ & $3\times10^5$ & $0.565739\,(29)$ & $0.565631\,(126)$\\
+N30 & $50$ & $12$ & $3\times10^4$ & $0.565718\,(61)$ & $0.565821\,(269)$\\
+N100 & $50$ & $12$ & $10^5$ & $0.565716\,(38)$ & $0.565644\,(138)$\\
+N100L ($\lambda=0.20$) & $50$ & $12$ & $10^5$ & $0.565717\,(55)$ & $0.565665\,(120)$\\
+\midrule
+weighted mean & & & & $0.565755\,(12)$ & $0.565694\,(42)$\\
+\bottomrule
+\end{tabular}
+\caption{Runs of the cavity solver. Standard errors in units of $10^{-6}$ in brackets. N100L uses $\lambda=0.20$ in the large-vertex drift (Approximation~\ref{app:large}).}\label{tab:runs}
+\end{table}
+
+\begin{observation}[Exponent from the cavity equations]\label{obs:cavity}
+The seven values of (R) are consistent with each other ($\chi^2=3.9$ on $6$ degrees of freedom), and so are those of (E) ($\chi^2=1.5$). Their weighted means are $0.565755\pm0.000012$ for (R) and $0.565694\pm0.000042$ for (E). (E) agrees with the reference ($-0.000029$, $0.7$ standard errors) and with the certified interval $[0.565713486,0.565736987]$ of \cite{UzayR3} (below its lower end by $0.000019$, $0.5$ standard errors); (R) is above the reference by $0.000032$, $2.7$ standard errors, and above the upper end of the interval by $0.000018$, $1.5$ standard errors. Changing the threshold $d^*$ from $50$ to $100$, the horizon from $12$ to $16$, the population from $3\times10^5$ to $3\times10^4$ records, and the drift of the large-vertex path, moves neither estimate by more than twice its standard error. A fit $\mu(n)=\mu_\infty+b/n$ in the number $n$ of records gives a bias at $3\times10^5$ of $-0.000009\pm0.000007$ for (R). On the same records (the six runs whose generations are stored), (E) minus (R) is $-0.000051\pm0.000040$.
+\end{observation}
+
+The cause of the offset of (R) is not located (Open problem~\ref{op:offset}). Table~\ref{tab:values} collects the values of $\mu$ from the closures and from the cavity equations.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+Method & $\mu$ & difference from $0.565723$\\
+\midrule
+Equal sharing (Observation~\ref{obs:equal}) & $0.568842$ & $+0.0031$\\
+Neighbourhood model (Approximation~\ref{app:nb}) & $0.56566\pm0.00001$ & $-0.00006$\\
+Cavity equations, (R) (Section~\ref{sec:cavity}) & $0.565755\pm0.000012$ & $+0.000032$\\
+Cavity equations, (E) (Section~\ref{sec:cavity}) & $0.565694\pm0.000042$ & $-0.000029$\\
+\midrule
+Certified interval \cite{UzayR3} & $[0.5657134,0.5657370]$ & $-0.000010$ to $+0.000014$\\
+\bottomrule
+\end{tabular}
+\caption{Values of $\mu$. Standard errors are Monte Carlo errors. The reference $0.565723$ is Uzay's simulation estimate.}\label{tab:values}
+\end{table}
+
+\section{Structure of the credit}\label{sec:dynamics}
+
+By Theorem~\ref{thm:ELage} the exponent is a function of the mean credit $C(s,a)$ by state and age. To see which parts of $C$ matter, we tally $C$ from a cavity solution and perturb it. The solution is a small one ($4\times10^4$ records and four batches of $4\times10^4$ output vertices, four generations); at this size single generations of $\mu$ vary by about $\pm0.0003$, so it is used only for sensitivities, which are differences on the same solution. $C$ is tallied for states of degree below $50$ in age bins of width $0.25$ and split into the part from the parent, $\pi(s,a)=\mathbb E[1/d_{\rm parent}\mid s,a]$, and the part from the children, $\chi=C-\pi$. The forward equation of Proposition~\ref{prop:forward} is solved by the Crank--Nicolson method in age (steps $0.008$ to $0.001$ give $\mu$ within $5\times10^{-6}$ of each other), with the credit $\kappa\lambda$ above degree $49$, and $\mu$ is the root of the equation of Theorem~\ref{thm:ELage}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llrrr}
+\toprule
+part & states & ages $0$--$1$ & $1$--$3$ & $3$--$12$\\
+\midrule
+parent & $(\ell,1)$ & $+13.9$ & $+1.4$ & $+0.0$\\
+parent & $(0,\kappa)$, $\kappa\ge2$ & $+4.3$ & $+3.2$ & $+0.3$\\
+parent & $(\ell,\kappa)$, $\ell\ge1$, $\kappa\ge2$ & $+1.1$ & $+1.6$ & $+0.1$\\
+children & $(0,\kappa)$, $\kappa\ge2$ & $+11.5$ & $+11.9$ & $+1.6$\\
+children & $(\ell,\kappa)$, $\ell\ge1$, $\kappa\ge2$ & $+2.7$ & $+6.1$ & $+1.1$\\
+\bottomrule
+\end{tabular}
+\caption{Change of $\mu$, in units of $10^{-5}$, when one part of the credit is raised by $1$ per cent in one block of states and ages.}\label{tab:sens}
+\end{table}
+
+\begin{observation}[Sensitivity to the credit of young vertices]\label{obs:young}
+Two parts of the credit carry most of the sensitivity (Table~\ref{tab:sens}): the credit from the parent to a vertex whose only non-leaf neighbour is its parent, in its first unit of age, and the credit from the children to a vertex without leaves, in its first three units of age. To keep $\mu$ within $10^{-5}$, each needs a relative accuracy of about $0.1$ per cent; the credit after age $3$ needs about $1$ per cent. Raising the credit $\kappa\lambda$ of the states of degree $50$ and above by $1$ per cent moves $\mu$ by $+0.02\times10^{-5}$.
+\end{observation}
+
+The signs are those of the Euler--Lotka equation: more credit means more leaves, a larger leaf share $\ell/d$ and more births. A vertex whose only non-leaf neighbour is its parent has few leaves early in its life, so its parent's inverse degree is a large part of its gain rate; a vertex without leaves gains leaves only through credit, and it gives no birth until it does.
+
+\begin{observation}[Range of the correlations]\label{obs:range}
+Equal sharing, which ignores which neighbour gives the credit, is above the reference by $0.0031$ (Table~\ref{tab:values}). The neighbourhood model, which follows a vertex with its parent from the parent's creation, the parent's own parent and all their children, and closes the rest with tables, is below by $0.00006$. The cavity equations, which keep every neighbour's path in the whole tree up to the approximations of Section~\ref{sec:cavity}, differ from the neighbourhood model by $0.00003$ for (E) and $0.00010$ for (R). The two models differ in more than the range of the paths they follow (the tables for the outermost credits, the treatment of large vertices and the fixed settings are also different), so this difference does not isolate the effect of the paths beyond two steps from a vertex. It is consistent with that effect being of order $10^{-4}$ or smaller, against the $0.003$ of equal sharing.
+\end{observation}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+description & change of $\mu$ ($10^{-5}$)\\
+\midrule
+parent's part on $(\ell,1)$ independent of $\ell$ at each age & $+81$\\
+parent's part on $(\ell,1)$ a product $p(a)h(\ell)$ & $+113$\\
+parent's part on $(\ell,1)$ independent of age & $-103$\\
+children's part on $(0,\kappa)$ equal to $(\kappa-1)g(a)$ & $-43$\\
+children's part on $(0,\kappa)$ independent of age & $-1816$\\
+\bottomrule
+\end{tabular}
+\caption{Change of $\mu$ when one part of the credit is replaced by a description with fewer functions, each fitted to the tallies.}\label{tab:desc}
+\end{table}
+
+\begin{observation}[Selection along paths]\label{obs:selection}
+None of the descriptions of Table~\ref{tab:desc} keeps $\mu$ within $10^{-5}$. The tallies show why. The parent's part on $(\ell,1)$ grows with $\ell$, and more so with age: its ratio between $\ell=6$ and $\ell=1$ is $1.17$ at age $0$, $1.42$ at $0.5$, $1.51$ at $1$, $1.71$ at $2$ and $2.17$ at $3$. A vertex that has gained many leaves by a given age is one whose parent has stayed small, so its state at age $a$ carries information about the parent's whole path. The children's part on $(0,\kappa)$ grows faster than $\kappa-1$ (at age $0.25$: $0.451$, $0.910$, $1.400$ for $\kappa=2,3,4$, against $0.451$, $0.902$, $1.353$): the children of a vertex that is still without leaves are the ones whose own growth has kept it so. At the precision of $10^{-5}$ the function $C(s,a)$ has no description by a few functions of state and age; its structure is the selection along paths that the cavity equations carry.
+\end{observation}
+
+A closed form for $\mu$ would need a closed form for $C$; by Observation~\ref{obs:selection}, $C$ at the required precision depends on the paths of the neighbours that select it, which is why we do not find one (Open problem~\ref{op:formula}).
+
+\section{Conclusions}\label{sec:conclusions}
+
+The exponent of complete redirection depends on the tree only through one function: the mean credit $C(s,a)$ of a newly created non-leaf given its numbers of leaf and non-leaf neighbours and its age (Theorem~\ref{thm:ELage}). This is proved from Uzay's stable law of the tree seen from a non-leaf (Theorem~\ref{thm:uzay}), whose construction has been checked by AI models and not by human referees.
+
+The credit can be computed without simulating the tree. Given the paths of a non-leaf and of its parent, the law of the paths of its children does not depend on the rest of the tree (Theorem~\ref{prop:subtree}), and the resulting cavity recursion, solved by population dynamics, gives $\mu=0.565694\pm0.000042$ from the Euler--Lotka equation and $0.565755\pm0.000012$ from the ratio equations (Observation~\ref{obs:cavity}). The first is consistent with Uzay's certified interval; the second lies above it by $1.5$ standard errors, for a reason not yet located. The certified interval is narrower than these standard errors.
+
+What sets the value of $\mu$ is the credit of young non-leaves: the credit from the parent in the first unit of age, and the credit from the children while a non-leaf has no leaves (Observation~\ref{obs:young}). Equal sharing of credit misses $\mu$ by $0.0031$; a model that follows a vertex, its parent and their children, and closes the rest with tables, is within $0.0001$ of the cavity solution (Observation~\ref{obs:range}). The credit carries a selection along the histories of vertices that no description by a few functions of state and age reproduces at the precision needed (Observation~\ref{obs:selection}). For this reason the reduction to $C(s,a)$ does not give a closed form for $\mu$; Section~\ref{sec:open} lists what remains open.
+
+\section{Open problems}\label{sec:open}
+
+\begin{openproblem}[Offset of the ratio-equation estimate]\label{op:offset}
+Locate the cause of the difference of $+0.000032\pm0.000012$ between (R) and the reference. It does not come from the size of the populations or from the drift of the large-vertex path (Observation~\ref{obs:cavity}). On the small solution of Section~\ref{sec:dynamics}, (R) exceeds the forward-equation value from the same credits by $1.6\times10^{-5}$; the forward equation there is solved on degrees up to $400$, with the mass above given birth rate $1$, which is one candidate. A decisive test is the forward equation applied to the credits by state and age of a production run.
+\end{openproblem}
+
+\begin{openproblem}[Closed form]\label{op:formula}
+Find a closed form for $\mu$, or a finite deterministic system whose solution gives $\mu$ to $10^{-5}$. By Observation~\ref{obs:selection}, such a system has to carry, with the state of a vertex, the states of the parent of a vertex with one non-leaf neighbour and of the children of a vertex without leaves.
+\end{openproblem}
+
+\begin{openproblem}[Uniqueness and the cavity fixed point]\label{op:cohort}
+Prove that the probability $\pi$ of Theorem~\ref{thm:uzay} is unique (Uzay proves this, together with the almost-sure convergence of the tree seen from a uniform non-leaf to $\pi$, in a source with a weaker review \cite[round2, \texttt{fringe/spatial-limit.md}]{UzayR3}), and that the cavity recursion of Lemma~\ref{lem:cavity}, written in the age of each vertex, has a limit as the horizon grows whose newborn law is $\beta$.
+\end{openproblem}
+
+\section*{Acknowledgements}
+The author thanks Steven Strogatz for drawing attention to \cite{KR2017} in 2022 and to \cite{Uzay2026} in 2026, and for comments on the 2022 notes, and Sid Redner and Yuanzhao Zhang for analysis and comments on the 2022 notes. This work was prepared with the assistance of Claude (Anthropic) in code, checks and drafting; the author is responsible for the content.
+
+\begin{thebibliography}{9}
+\bibitem{ABDDKL} L.~Addario-Berry, S.~Briend, L.~Devroye, S.~Donderwinkel, C.~Kerriou and G.~Lugosi, Random friend trees, \emph{Random Structures \& Algorithms} (2026); arXiv:2403.20185.
+\bibitem{HKRZ2026} H.~Hartle, P.~L.~Krapivsky, S.~Redner and Y.~Zhang, Anomalous scaling in redirection networks, arXiv:2604.01540 (2026).
+\bibitem{Jacod1975} J.~Jacod, Multivariate point processes: predictable projection, Radon--Nikodym derivatives, representation of martingales, \emph{Z. Wahrscheinlichkeitstheorie verw. Gebiete} 31 (1975) 235--253.
+\bibitem{LongKernel} C.~D.~Long, Effective computation and boundary robustness of the random friend-tree exponent, research draft, 23 November 2026; \url{https://github.com/long-mathematics/friend-tree-growth}, revision 090bbbe.
+\bibitem{LongLocal} C.~D.~Long, Growth and irrationality in local redirection trees, research draft, 23 November 2026; same repository and revision.
+\bibitem{JN1984} P.~Jagers and O.~Nerman, The growth and composition of branching populations, \emph{Adv. Appl. Probab.} 16 (1984) 221--259.
+\bibitem{KR2017} P.~L.~Krapivsky and S.~Redner, Emergent network modularity, \emph{J. Stat. Mech.} (2017) 073405; arXiv:1706.01514.
+\bibitem{KR2023} P.~L.~Krapivsky and S.~Redner, The magic of networks grown by redirection, arXiv:2305.10628 (2023).
+\bibitem{Repo} M.~C.~S.~Carreira, RedirectionNetworks, \url{https://github.com/MarcosCarreira/RedirectionNetworks}.
+\bibitem{Uzay2026} C.~Uzay, The random friend tree exponent is not 17/30: proofs and exact-arithmetic checkers, \url{https://github.com/uzay-eth/friend-tree-exponent}, copy of 22 November 2026; not peer reviewed.
+\bibitem{UzayR3} C.~Uzay, The non-leaf growth exponent of the random friend tree, Round 3 version, 25 November 2026, with the sources in the same repository (copy of 25 November 2026); not peer reviewed.
+\end{thebibliography}
+
+\clearpage
+\appendix
+\section*{Appendices}
+\refstepcounter{section}\section*{Appendix \thesection. Pre-registered checks}\label{app:checks}
+
+Each run of the cavity solver and the final run of the neighbourhood model had its decision rules written before the run. They are listed with their outcomes; a rule that was badly designed is reported as such.
+
+\begin{description}
+\item[Neighbourhood model.] With $\sigma$ the standard deviation of ten evaluations at the fixed point, $|z|>3$ for $z=(\mu-0.565723)/(\sigma/\sqrt{10})$ is reported as a remaining gap. Outcome: $z=-5.4$ (mean of the ten evaluations); a gap remains (Observation~\ref{obs:nb}).
+\item[K2 (production run).] Each of generations $6$--$8$ within $2$ standard errors of the replica means. Failed for both estimates. The rule compared single generations with the spread of means of three generations and was below the noise of the quantity it tests; the series of generation means has no trend (slope $-3\times10^{-6}$ per generation for (R)). Replaced by K2$'$ in the later runs.
+\item[K2$'$ (B, D, H).] The least-squares slope of the generation means over generations $2$--$5$ within $2$ standard errors of zero. Passed for every run and estimate.
+\item[K3 (all cavity runs).] Every effective sample size at least $10$ per cent; otherwise the run is not usable. Passed in every run; smallest value $0.23$.
+\item[K4 (production run and B).] $|z|\le2$ for $z=(\mu-0.565723)/\text{s.e.}$ is agreement, and (E) and (R) agree within $2$ combined standard errors. Production run: (R) $z=+1.52$, (E) $z=-0.66$, (E) against (R) $z=-0.87$; all agree. B: (R) $z=+2.80$, no agreement; (E) $z=+0.49$; (E) against (R) $z=+0.02$.
+\item[K5 (D and H against B).] The change of $\mu$ within $2$ combined standard errors. Passed: D $-0.000026$ against $0.000085$ (R) and $-0.000075$ against $0.000277$ (E); H $-0.000043$ against $0.000072$ (R) and $-0.000153$ against $0.000354$ (E).
+\item[P1 (N30, N100 and B).] Fit $\mu(n)=\mu_\infty+b/n$; a bias at $3\times10^5$ is resolved if it exceeds $2$ standard errors, and $\mu_\infty$ is compared with the reference. Outcome: no bias resolved ((R) $-0.000009\pm0.000007$, (E) $+0.000002\pm0.000033$); $\mu_\infty$ is $0.565781\pm0.000023$ for (R) ($z=+2.48$) and $0.565726\pm0.000126$ for (E) ($z=+0.03$).
+\item[P2 (N100L against N100).] The drift of the large-vertex path has an effect if the change exceeds $2$ combined standard errors. Outcome: no effect ((R) $+0.000002$ against $0.000132$).
+\item[Paired comparison.] $d=$ (E) $-$ (R) on the same records, over the six runs with stored generations; the rule required a standard error below $0.000008$ to separate $d=0$ from $d=-0.000016$. Outcome: $d=-0.000051\pm0.000040$, undetermined.
+\end{description}
+
+\refstepcounter{section}\section*{Appendix \thesection. Code and result files}\label{app:files}
+
+The repository \cite{Repo}, folder \texttt{CompleteRedirection2026}, contains the code and the result files. Each script takes no arguments, has its settings in the file, and writes a dated result file.
+{\raggedright
+\begin{description}
+\item[\texttt{closure\_solver.py}] Ratio equations under equal sharing (Observation~\ref{obs:equal}).
+\item[\texttt{credit\_sim.py}] Simulation of the tree with the credit by state, used for the comparisons of Observation~\ref{obs:nb}.
+\item[\texttt{nb\_closure.py}] Neighbourhood model (Approximation~\ref{app:nb}). Result file \texttt{nb\_closure\_2026-11-24\_150442.txt}, with the tables used by generation $0$ of the cavity solver.
+\item[\texttt{cavity.py}] Cavity solver (Section~\ref{sec:cavity}).
+\item[\texttt{cav\_run.py}, \texttt{cav\_k5.py}, \texttt{cav\_bias.py}] The production run; runs B, D and H; runs N30, N100 and N100L (Table~\ref{tab:runs}), with their result files.
+\item[\texttt{red\_s1.py}] A small cavity solution and the tallies of the credit by state and age used in Section~\ref{sec:dynamics} (\texttt{red\_s1\_2026-11-24\_210740\_cloud.npz}).
+\item[\texttt{red\_fwd.py}, \texttt{red\_s3.py}, \texttt{red\_s4.py}] The forward equation by Crank--Nicolson with these tallies, and Tables~\ref{tab:sens} and~\ref{tab:desc}, with their result files.
+\item[\texttt{cr\_exact.py}] Exact enumeration of $T_N$ for $N\le16$ and the exact checks of Appendix~\ref{app:exact} (result \texttt{cr\_exact\_2026-11-22\_225355.csv}).
+\item[\texttt{fresh\_closure.py}] Fresh-child closure (Appendix~\ref{app:fresh}; result \texttt{fresh\_closure\_2026-11-22\_233326.txt}). \texttt{closure\_solver.py} also solves DAN and PAN (Appendix~\ref{app:van}).
+\end{description}
+}
+
+\refstepcounter{section}\section*{Appendix \thesection. Exact one-step relations}\label{app:exact}
+
+This appendix gives the exact one-step relations of the discrete growth for the counts of non-leaves by state and for adjacent pairs of non-leaves.
+
+\begin{definition}[Classes and counts]
+A vertex of $T_N$ is a \emph{leaf} if its degree is $1$ and a \emph{non-leaf} otherwise. Let $\mathcal{C}_N$ be the set of non-leaves, $C_N=|\mathcal{C}_N|$ and $L_N=N-C_N$. For $v\in\mathcal{C}_N$ let $\ell(v)$ be the number of leaves adjacent to $v$, $\kappa(v)$ the number of non-leaves adjacent to $v$, and $d(v)=\ell(v)+\kappa(v)$ its degree; the \emph{state} of $v$ is $(\ell(v),\kappa(v))$. Let
+\[
+D=\{(\ell,\kappa)\in\mathbb{Z}^2:\ \ell\ge0,\ \kappa\ge1,\ \ell+\kappa\ge2\},
+\]
+and let $M_{\ell,\kappa}(N)$ be the number of non-leaves in state $(\ell,\kappa)$ (zero outside $D$). Define the leaf-share sum and the core-hit intensities
+\[
+S_N=\sum_{v\in\mathcal{C}_N}\frac{\ell(v)}{d(v)},\qquad
+H_{\ell,\kappa}(N)=\sum_{\substack{v\in\mathcal{C}_N\\(\ell(v),\kappa(v))=(\ell,\kappa)}}\ \sum_{\substack{u\in\mathcal{C}_N\\u\sim v}}\frac{1}{d(u)} .
+\]
+\end{definition}
+
+\begin{lemma}[Transitions]\label{c:lem:transitions}
+Let $N\ge3$ and $C_N\ge2$. Conditionally on $T_N$, exactly one of the following happens.
+\begin{enumerate}
+\item[(a)] $V_N$ is a leaf; $W_N$ is its non-leaf neighbour $v$, which moves from $(\ell,\kappa)$ to $(\ell+1,\kappa)$. For a given non-leaf $v$ this has probability $\ell(v)/N$.
+\item[(b)] $V_N=v$ is a non-leaf and $W_N=w$ is a leaf. Then $w$ becomes a non-leaf in state $(1,1)$ and $v$ moves from $(\ell,\kappa)$ to $(\ell-1,\kappa+1)$. For a given $v$ this has probability $\ell(v)/(N\,d(v))$.
+\item[(c)] $V_N=v$ is a non-leaf and $W_N=u$ is a non-leaf, which moves from $(\ell,\kappa)$ to $(\ell+1,\kappa)$. For a given ordered pair $(v,u)$ of adjacent non-leaves this has probability $1/(N\,d(v))$.
+\end{enumerate}
+No other vertex changes state.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:structure}(i) a leaf has a single neighbour, a non-leaf, giving (a). In (b), $w$ gains the leaf $N+1$ and keeps its neighbour $v$; $v$ loses a leaf neighbour and gains a non-leaf neighbour. In (c), $u$ gains a leaf. The only new edge is $\{W_N,N+1\}$, so only $W_N$ changes degree, and the only vertex whose neighbours change class is $v$ in case (b). The probabilities follow from the uniform choices.
+\end{proof}
+
+\begin{remark}[Relation to the generator of \cite{Uzay2026}]
+The three cases are the transitions of the exact scaled generator in \cite[\texttt{proofs/bracket-motifs.md}, Section~2]{Uzay2026}, where the tree is rooted at the vertex of degree $2$ of $T_3$ and a non-leaf $u$ carries the triple $(L_u,k_u,h_u)$ of leaf children, non-leaf children and parent indicator. Here $\ell=L_u$ and $\kappa=k_u+h_u$; cases (a) and (c) together are the leaf gain at rate $L_u+\rho_u$, where the credit $\rho_u=\sum_{v\sim u,\,v\in\mathcal{C}}1/D_v$ is the inner sum in $H_{\ell,\kappa}$; case (b) is budding at rate $L_u/D_u$. The relations below apply that generator to counts.
+\end{remark}
+
+\begin{proposition}[Conditional drifts]\label{c:prop:drift}
+Let $N\ge3$ and $C_N\ge2$. Then $\mathbb{E}[C_{N+1}-C_N\mid T_N]=S_N/N$, and for every $(\ell,\kappa)\in D$
+\begin{multline*}
+N\,\mathbb{E}\left[M_{\ell,\kappa}(N+1)-M_{\ell,\kappa}(N)\mid T_N\right]
+=(\ell-1)M_{\ell-1,\kappa}-\ell M_{\ell,\kappa}
++\frac{\ell+1}{\ell+\kappa}M_{\ell+1,\kappa-1}-\frac{\ell}{\ell+\kappa}M_{\ell,\kappa}\\
++H_{\ell-1,\kappa}-H_{\ell,\kappa}+\mathbf{1}[(\ell,\kappa)=(1,1)]\,S_N .
+\end{multline*}
+\end{proposition}
+
+\begin{proof}
+$C$ increases by one exactly in case (b), whose total probability is $\sum_v\ell(v)/(Nd(v))=S_N/N$. Case (a) moves each vertex in state $(\ell-1,\kappa)$ into $(\ell,\kappa)$ with probability $(\ell-1)/N$ and each vertex in $(\ell,\kappa)$ out with probability $\ell/N$. Case (b) moves a vertex from $(\ell+1,\kappa-1)$, of degree $\ell+\kappa$, into $(\ell,\kappa)$ with probability $(\ell+1)/(N(\ell+\kappa))$, moves a vertex out of $(\ell,\kappa)$ with probability $\ell/(N(\ell+\kappa))$, and creates a vertex in $(1,1)$ with total probability $S_N/N$. Case (c) moves a vertex $u$ out of its state with probability $\sum_{v\in\mathcal{C},v\sim u}1/(Nd(v))$; summing over $u$ in states $(\ell-1,\kappa)$ and $(\ell,\kappa)$ gives $H_{\ell-1,\kappa}/N$ in and $H_{\ell,\kappa}/N$ out.
+\end{proof}
+
+\begin{lemma}[Total core-hit intensity]\label{c:lem:total}
+For $N\ge3$ and $C_N\ge2$,
+\[
+\sum_{(\ell,\kappa)\in D}H_{\ell,\kappa}=\sum_{v\in\mathcal{C}_N}\frac{\kappa(v)}{d(v)}=C_N-S_N .
+\]
+\end{lemma}
+
+\begin{proof}
+The double sum runs over ordered pairs $(u,v)$ of adjacent non-leaves with weight $1/d(v)$; grouping by $v$ gives $\sum_v\kappa(v)/d(v)$, and $\kappa/d=1-\ell/d$.
+\end{proof}
+
+All terms of Proposition~\ref{c:prop:drift} are functions of the counts except $H_{\ell,\kappa}$, which depends on the degrees of the non-leaf neighbours of the vertices in each state; Lemma~\ref{c:lem:total} fixes its total.
+
+\begin{definition}[Pair counts]
+For $s=(\ell,\kappa)\in D$ write $d(s)=\ell+\kappa$, $s^{-}=(\ell-1,\kappa)$ and $s^{\circ}=(\ell+1,\kappa-1)$. For $s,s'\in D$ let $P_{s,s'}$ be the number of ordered pairs $(v,u)$ of adjacent non-leaves with $v$ in state $s$ and $u$ in state $s'$, and $G_{s,s'}=\sum_{(v,u)}\sum_{x\in\mathcal{C},\,x\sim v,\,x\neq u}1/d(x)$, the outer sum over the same pairs.
+\end{definition}
+
+\begin{lemma}[Pair identities]\label{c:lem:pairid}
+For $N\ge3$, $C_N\ge2$: (i) $P_{s,s'}=P_{s',s}$; (ii) $\sum_{s'}P_{s,s'}=\kappa M_s$; (iii) $H_s=\sum_{s'}P_{s,s'}/d(s')$; (iv) $\sum_{s'}G_{s,s'}=(\kappa-1)H_s$.
+\end{lemma}
+
+\begin{proof}
+(i) Reversing a pair exchanges the states. (ii) A vertex in state $s$ is the first end of $\kappa$ pairs. (iii) Definition of $H_s$ grouped by the state of the neighbour. (iv) For $v$ in state $s$ and a non-leaf neighbour $x$, the term $1/d(x)$ appears once for each of the $\kappa-1$ other non-leaf neighbours $u$ of $v$.
+\end{proof}
+
+\begin{proposition}[Pair drift]\label{c:prop:pairdrift}
+For $N\ge3$, $C_N\ge2$, $s=(\ell,\kappa)$ and $s'=(\ell',\kappa')$ in $D$, let
+\begin{multline*}
+F_{s,s'}=(\ell-1)P_{s^{-},s'}+\frac{P_{s^{-},s'}}{d(s')}+G_{s^{-},s'}-\ell P_{s,s'}-\frac{P_{s,s'}}{d(s')}-G_{s,s'}\\
++\frac{\ell+1}{\ell+\kappa}P_{s^{\circ},s'}-\frac{\ell}{\ell+\kappa}P_{s,s'},
+\end{multline*}
+\[
+B_{s,s'}=\mathbf{1}[s'=(1,1)]\frac{\ell+1}{\ell+\kappa}M_{s^{\circ}}+\mathbf{1}[s=(1,1)]\frac{\ell'+1}{\ell'+\kappa'}M_{s'^{\circ}}.
+\]
+Then $N\,\mathbb{E}[P_{s,s'}(N+1)-P_{s,s'}(N)\mid T_N]=F_{s,s'}+F_{s',s}+B_{s,s'}$, and summing over $s'$ gives $\kappa$ times the drift of $M_s$ in Proposition~\ref{c:prop:drift}.
+\end{proposition}
+
+\begin{proof}
+No pair disappears, and in one step at most one end of an existing pair changes state (Lemma~\ref{c:lem:transitions}). For a pair $(v,u)$ in $(s,s')$ the first end moves to $(\ell+1,\kappa)$ in case (a) with probability $\ell/N$ and in case (c) with probability $1/(Nd(u))$ from $u$ and $\sum_{x\neq u}1/(Nd(x))$ from the other non-leaf neighbours; it moves to $(\ell-1,\kappa+1)$ in case (b) with probability $\ell/(N(\ell+\kappa))$. This gives $F_{s,s'}$, and the second end gives $F_{s',s}$. New pairs arise in case (b): a vertex in $s^{\circ}$ moves to $s$ and forms two ordered pairs with the new vertex in $(1,1)$, giving $B$. For the sum over $s'$: $\sum_{s'}F_{s',s}$ telescopes to zero; Lemma~\ref{c:lem:pairid} turns $\sum_{s'}F_{s,s'}$ into $\kappa$ times the corresponding terms of Proposition~\ref{c:prop:drift} except that the term in $M_{s^\circ}$ appears with factor $\kappa-1$, and $\sum_{s'}B_{s,s'}$ supplies the remaining $M_{s^\circ}$ term and, for $s=(1,1)$, the creation term $S_N$.
+\end{proof}
+
+\begin{remark}[Exact check]
+The program \texttt{cr\_exact.py} enumerates the distribution of $T_N$ over unlabelled trees in exact rational arithmetic and verifies Proposition~\ref{c:prop:drift}, Lemma~\ref{c:lem:total}, Lemma~\ref{c:lem:pairid} and Proposition~\ref{c:prop:pairdrift} conditionally on every tree with $C_N\ge2$ and $N\le12$ (pair relations: $N\le11$), state by state. Altered versions (the factor $(\ell+1)/(\ell+\kappa)$ replaced by $(\ell+1)/(\ell+\kappa+1)$; the terms in $H$ removed; the term $-\frac{\ell}{\ell+\kappa}P_{s,s'}$ removed) fail at $N=4$.
+\end{remark}
+
+
+\refstepcounter{section}\section*{Appendix \thesection. The models DAN, PAN and VAN}\label{app:van}
+
+In VAN$(\omega)$ of \cite{HKRZ2026} there is no redirection between non-leaves, a vertex with $\ell\ge1$ always redirects to a leaf, and a vertex with $\ell=0$ is attached to directly with weight $\omega$ ($\omega=1$: DAN; $\omega=0$: PAN). The single-vertex chain reduces to the leaf count: $\ell\to\ell+1$ at rate $\ell$, $\ell\to\ell-1$ (a birth) at rate $1$ for $\ell\ge1$, and $0\to1$ at rate $\omega$; the leaf gains of a vertex do not depend on its neighbours, and the Euler--Lotka equation of Theorem~\ref{thm:ELage} holds with this chain in place of $X$, by the renewal argument of a branching population with independent lives; Long \cite{LongLocal} gives a Crump--Mode--Jagers proof of the resulting equations and proves that the exponents are irrational for algebraic $\omega$.
+
+\begin{proposition}[Survival of the leaf count]\label{c:prop:poisson}
+For the chain $\ell\to\ell+1$ at rate $\ell$, $\ell\to\ell-1$ at rate $1$, absorbed at $0$, started at $\ell\ge1$, the absorption time $T$ satisfies
+\[
+\mathbb{P}_\ell(T>t)=\mathbb{P}\bigl(\mathrm{Poisson}(1-e^{-t})<\ell\bigr),
+\]
+and $\varphi(\mu):=\mathbb{E}_1[e^{-\mu T}]=\int_0^1x^{\mu}e^{x-1}\,dx$.
+\end{proposition}
+
+\begin{proof}
+Let $c=1-e^{-t}$, $\pi_j=e^{-c}c^j/j!$ and $u_\ell=\sum_{j<\ell}\pi_j$. Then $\frac{d}{dt}u_\ell=-e^{-t}\pi_{\ell-1}$, while $\ell(u_{\ell+1}-u_\ell)+(u_{\ell-1}-u_\ell)=\ell\pi_\ell-\pi_{\ell-1}=(c-1)\pi_{\ell-1}=-e^{-t}\pi_{\ell-1}$. So $u$ solves the backward equations with $u_0=0$, $u_\ell(0)=1$; the chain does not explode, so this $[0,1]$-valued solution is $\mathbb{P}_\ell(T>t)$. For $\ell=1$ the density of $T$ is $e^{-t}\exp(e^{-t}-1)$, and $x=e^{-t}$ gives the integral; the event $\{T=\infty\}$, of probability $e^{-1}$, contributes zero.
+\end{proof}
+
+\begin{proposition}[Exponent equations]\label{c:prop:van}
+The exponent of VAN$(\omega)$ satisfies $(1-\mu)(\omega+\mu)=\varphi(\mu)(\omega+\mu-\omega\mu)$; in particular $1-\mu=\int_0^1x^\mu e^{x-1}dx$ for PAN and $1-\mu^2=\int_0^1x^\mu e^{x-1}dx$ for DAN.
+\end{proposition}
+
+\begin{proof}
+The Euler--Lotka equation reads $1=\int_0^\infty e^{-\mu\tau}\mathbb{P}(\ell_\tau\ge1)\,d\tau=1/\mu-O$ with $O=\int_0^\infty e^{-\mu\tau}\mathbb{P}(\ell_\tau=0)\,d\tau$. By the strong Markov property each visit to $0$ is reached with discount $\varphi(\mu)$ from the previous start at $\ell=1$, lasts an exponential time of rate $\omega$ (contributing $1/(\omega+\mu)$ to $O$), and ends with discount $\omega/(\omega+\mu)$. Hence $O=\varphi/(\omega+\mu-\omega\varphi)$, and $1=1/\mu-O$ rearranges to the stated equation. Proposition~\ref{c:prop:poisson} gives $\varphi$.
+\end{proof}
+
+\begin{remark}
+These are equations (5a), (5b) and (25) of \cite{HKRZ2026}, obtained there from closed recurrences for the leaf-degree ratios. Here they follow from the Euler--Lotka equation, a renewal argument and Proposition~\ref{c:prop:poisson}. Solving them gives $0.771192$ (DAN) and $0.549735$ (PAN); \texttt{closure\_solver.py} reproduces both to seven digits.
+\end{remark}
+
+
+\refstepcounter{section}\section*{Appendix \thesection. Fresh-child closure}\label{app:fresh}
+
+Equal sharing gives a fresh non-leaf, which sends credit $1/2$ to its parent, the same credit as any other neighbour. This appendix treats fresh non-leaves exactly.
+
+\begin{conjecture}[Sign of the error]\label{c:conj:sign}
+A vertex created in case (b) has state $(1,1)$ and degree $2$, and its only non-leaf neighbour is the vertex that created it, to which it sends credit $1/2$, against the average $\lambda\approx0.22$. Vertices with many recent children are vertices with a large leaf share, for which a new leaf changes $\ell/d$ little. Equal sharing moves credit from them to vertices with a small leaf share, in particular vertices with $\ell=0$, and so overstates the rate of creation of non-leaves and $\mu$.
+\end{conjecture}
+
+\subsection*{Exact treatment of new vertices}
+
+Call a non-leaf \emph{fresh} if its state is $(1,1)$. A fresh vertex $u$ has a single non-leaf neighbour $v$; it sends $v$ credit $1/2$ and stops being fresh at rate $1$ (its leaf is picked), $1/2$ (it buds) or $1/d(v)$ ($v$ redirects to it). These rates are exact by Lemma~\ref{c:lem:transitions}.
+
+\begin{approximation}[Fresh-child closure]\label{c:app:fresh}
+Refine the state of a non-leaf to $(\ell,\kappa,j)$, $j$ the number of fresh non-leaf neighbours. The single-vertex chain has $(\ell,\kappa,j)\to(\ell+1,\kappa,j)$ at rate $\ell+j/2+(\kappa-j)\lambda'$, $(\ell,\kappa,j)\to(\ell-1,\kappa+1,j+1)$ at rate $\ell/(\ell+\kappa)$ (a birth of a fresh vertex), and $(\ell,\kappa,j)\to(\ell,\kappa,j-1)$ at rate $j\,(3/2+1/(\ell+\kappa))$, started at $(1,1,0)$; credit from non-fresh neighbours is shared equally, $\lambda'=\bigl(\sum q\,\kappa/d-q_F/2\bigr)/\bigl(\sum\kappa q-q_F\bigr)$, $q_F$ the fraction of non-leaves that are fresh.
+\end{approximation}
+
+\begin{observation}[Value under the fresh-child closure]\label{c:obs:fresh}
+With cut-offs $L=300$, $10^3$, $3\times10^3$ and $10^4$ the fresh-child closure gives $\mu=0.5684457$, $0.5683260$, $0.5683046$ and $0.5683000$, with $\lambda'=0.1746298$ and $q_F=0.253374$ at $L=10^4$; successive differences shrink by a factor of about $0.2$, so the closure value is $\mu=0.568299$ to within $2\times10^{-6}$, which is $0.000543$ below the equal-sharing value. Switching the fresh treatment off in the same program reproduces Observation~\ref{obs:equal} to $2\times10^{-7}$.
+\end{observation}
+
+\begin{remark}[Consistency of the fresh count]
+In the exact dynamics $\sum_vj_v$ equals the number of fresh vertices. The closure does not impose this: the redirection from a parent to its fresh child has rate $1/d$ of the parent in the parent's chain and the shared rate $\lambda'$ in the child's chain. At $L=10^4$, $\sum_sj\,q_s=0.2505$ against $q_F=0.2534$ (with equal sharing, $0.2503$ against $0.2490$), a difference of about one per cent.
+\end{remark}
+
+\begin{remark}[Reading]
+The exact treatment of fresh vertices lowers $\mu$, in the direction of Conjecture~\ref{c:conj:sign}, by about $0.0005$, which is about one sixth of the error of equal sharing. Credit from fresh vertices is large (they are a quarter of the non-leaves and send $1/2$ each); the remaining five sixths of the error come from correlations that this refinement does not include.
+\end{remark}
+
+
+\paragraph{Numerical method.} For a closure with $c_s=\lambda\kappa$ the equations \eqref{eq:ratio} are solved layer by layer in $\kappa$; within a layer, $q_{\ell,\kappa}$ is given by a first-order recursion in $\ell$ with input from layer $\kappa-1$, evaluated in vector form. Truncating at $\ell\le L$ computes the occupation of the chain killed above $L$, and $\mu$ is found by bisection on $1-\mu=\mu J_L(\mu)$; $\lambda$ by a fixed-point iteration, with the tail of $\sum\kappa q_s$ beyond $L$ added as the discounted flux into $\ell=L+1$ times $\kappa/\mu+1/\mu^2$. The fresh-child closure adds the index $j$, processed from high to low within each layer. Determining $\mu$ from $\sum_sq_s\ell/d(s)=\mu$ instead gives, for equal sharing, $0.557974$, $0.566275$, $0.568220$ at $L=10^3,10^4,10^5$: this form misses the births of the vertices beyond $L$, which give birth at a rate close to $1$ and reach $\ell=L$ after a time of about $\ln L$, so its error decays like $L^{-\mu}$; three-point extrapolation gives $0.5688$, consistent with Observation~\ref{obs:equal}.
+
+\refstepcounter{section}\section*{Appendix \thesection. Small trees and the certified bracket}\label{app:smallN}
+
+\texttt{cr\_exact.py} computes the exact distribution of $T_N$ over unlabelled trees for $N\le16$. Every unlabelled tree with $N$ vertices has positive probability (the counts are $1$, $1$, $2$, $3$, $6$, $11$, $23$, $47$, $106$, $235$, $551$, $1301$, $3159$, $7741$, $19320$ for $N=2,\dots,16$). The values of $\mathbb{E}[C_N]$ and $\mathbb{E}[S_N]$ agree exactly with the independent table of \cite{Uzay2026} for $3\le N\le16$; for example $\mathbb{E}[C_{13}]=863016923161025341999/295667991134208000000$ in both. The probability that $T_N$ is a star is $2/(N-1)$, as in \cite[(A4)]{HKRZ2026}. The explicit bounds of \cite[\texttt{proofs/bracket-motifs.md}, Theorem~1]{Uzay2026}, $\frac{7304352308}{8763936965}\prod_{j=3}^{N-1}\bigl(1+\frac{113}{200j}\bigr)\le\mathbb{E}[C_N]\le\frac{14606753031}{2989767809}\prod_{j=3}^{N-1}\bigl(1+\frac{1133}{2000j}\bigr)$, hold against the exact values for every $3\le N\le21$ ($N\le16$ from our enumeration, $17\le N\le21$ from the table of \cite{Uzay2026}).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{rrrrrr}
+\toprule
+$N$ & trees & $\mathbb{E}[C_N]$ & $\mathbb{E}[L_N]/N$ & $\mathbb{E}[S_N]$ & $\mathbb{P}(\text{star})$\\
+\midrule
+4 & 2 & 1.333333 & 0.666667 & 1.000000 & 2/3\\
+6 & 6 & 1.797222 & 0.700463 & 1.153472 & 2/5\\
+8 & 23 & 2.166659 & 0.729168 & 1.326493 & 2/7\\
+10 & 106 & 2.489218 & 0.751078 & 1.492661 & 2/9\\
+12 & 551 & 2.781414 & 0.768215 & 1.649492 & 2/11\\
+14 & 3159 & 3.051531 & 0.782033 & 1.797614 & 2/13\\
+16 & 19320 & 3.304515 & 0.793468 & 1.938086 & 2/15\\
+\bottomrule
+\end{tabular}
+\caption{Exact values from the enumeration (decimals rounded; exact rationals in \texttt{results/cr\_exact\_2026-11-22\_225355.csv}).}
+\end{table}
+
+
+\subsection*{Comparison with the computer-assisted bracket}
+The bracket of \cite{Uzay2026} is obtained from potentials $\Phi(T)=\sum_uf(\text{state of }u)+\sum_{\text{edges}}g+\sum_{\text{3-vertex motifs}}h$, with an analytic interpolation for degrees above $24$, and exact verification of $\mathcal{L}\Phi\le\lambda\Phi$ (upper bound) or $\ge$ (lower bound) for the exact generator $\mathcal{L}$. The layers of the potential correspond to the layers of the closure hierarchy here: vertex states, pairs and three-vertex configurations. The two approaches give different outputs. The certificates give proven bounds, of width $0.0015$, and no equation; the closures give equations, values and a decomposition of the exponent into births and credit, without bounds.
+
+\begin{observation}
+The closure values $0.568842$ and $0.568299$ lie above the certified upper bound $0.5665$ of the version of \cite{Uzay2026} compared here, and above the narrower interval $[0.565713486,0.565736987]$ of \cite{UzayR3}. The closures are therefore not exact, and their errors, $0.0031$ and $0.0026$ relative to the simulation estimate, are of the order of the gap between the simulation fits $0.566$ \cite{KR2017} and $0.569$ \cite{HKRZ2026}.
+\end{observation}
+
+\begin{conjecture}[Certificates and reproductive values]
+In branching-process theory the reproductive value $V$ of a state satisfies $(\mathcal{A}+b)V=\mu V$, with $\mathcal{A}$ the generator of the single-vertex chain and $b$ the birth rate, so that $\sum_uV(\text{state of }u)$ grows at exactly the rate $\mu$ under the closure. The vertex table $f$ of an optimal certificate in \cite{Uzay2026} is an approximate reproductive value, and the reproductive values of a closure, corrected for the credit correlations, are candidate starting points for certificates with a narrower bracket.
+\end{conjecture}
+
+
+\refstepcounter{section}\section*{Appendix \thesection. Earlier work, 2022--2023}\label{app:earlier}
+
+Steven Strogatz drew the author's attention to \cite{KR2017} on 20 September 2022, and the author then wrote notes on this model: \emph{Exact values for small N and a simple recursion for the complete redirection network} (29 September 2022), \emph{On the edge of forever --- some questions about the complete redirection network} (6 October 2022), \emph{Notes on $\mu$} (11 October 2022), and the 2023 programs and formula sheets for a family of related models; they are in the repository \cite{Repo}, folder \texttt{CompleteRedirection2022}. Steven Strogatz commented on the 2022 notes, and Sid Redner and Yuanzhao Zhang provided analysis and comments. This appendix summarises that work and states, for each item, what is now known about it.
+
+\subsection*{Models and node classes}
+The 2022 notes classify vertices as \emph{leaves} (degree $1$), \emph{hubs} (degree at least $2$ with at least one leaf neighbour) and \emph{cores} (degree at least $2$ with no leaf neighbour), with $N=L+H+C$ and, counting edges by the classes of their ends, $N-1=L+E_{HH}+E_{HC}+E_{CC}$. In the notation of Appendix~\ref{app:exact}, hubs are the non-leaves with $\ell\ge1$ and cores those with $\ell=0$; the cores are the nucleus of \cite{HKRZ2026}. Besides complete redirection (CR), the notes study no redirection (NR, the random recursive tree), partial redirection (redirection with probability $p_r$, otherwise direct attachment) and a fuzzy redirection (FR) in which the attachment point is drawn by class rather than among the actual neighbours (a leaf redirects to a uniform hub, a hub to a uniform other vertex, a core to a uniform hub or core). The 2023 programs add the linear preferential attachment tree (BA), a cross redirection (XR: a picked leaf redirects to a uniform hub and a picked hub to a uniform leaf) and a hub redirection (HR: a picked leaf redirects to a uniform hub, a picked hub to a uniform other vertex).
+
+\subsection*{Exact enumeration and closed forms}
+The 2022 notes enumerate the distribution of $T_N$ over unlabelled trees for $N\le16$ with Mathematica's canonical graph forms, and study the distribution of the number of leaves. They derive:
+\begin{enumerate}
+\item the star probability $P_{\mathrm{star}}[N]=2/(N-1)$ (also \cite[(A4)]{HKRZ2026});
+\item the path (``snake'') probability $P_{\mathrm{snake}}[N]=2/(N-1)!$;
+\item the single-defect star (two non-leaves, one of them with a single leaf), through the recursion $P_{\mathrm{SD}}[N+1]=\frac{2}{N(N-1)}+\bigl(\frac{N-3}{N}+\frac{1}{2N}\bigr)P_{\mathrm{SD}}[N]$ from $P_{\mathrm{SD}}[5]=5/12$, with solution
+\[
+P_{\mathrm{SD}}[N]=\frac{4}{3(N-1)}\left(1+\frac{1}{4^{N-4}(N-2)}\binom{2N-7}{N-4}\right),\qquad N\ge5,
+\]
+so that $P_{\mathrm{SD}}[N]/P_{\mathrm{star}}[N]\to2/3$;
+\item a recursion for the two-hub trees with $s$ and $t$ leaves, which corrects the corresponding formula of \cite{KR2017} by symmetry factors $1/2$ when $s=t$ and $2$ when $|s-t|=1$ in the relevant terms;
+\item a conjecture that the total probability of two-hub trees divided by $P_{\mathrm{star}}[N]$ tends to $3/2$.
+\end{enumerate}
+
+\begin{observation}[Status of the closed forms]
+The enumeration of Appendix~\ref{app:smallN}, written independently, confirms items 1--4 exactly for $N\le12$: the path probability, the single-defect values $1/3,5/12,37/120,71/288,\dots$, the closed form, and the two-hub recursion with the symmetry factors. The limit $2/3$ follows from the closed form, since $\binom{2N-7}{N-4}4^{-(N-4)}\to0$. For item 5 the ratio is $1.290$, $1.411$, $1.477$ at $N=8$, $10$, $12$, consistent with the conjecture, which remains open.
+\end{observation}
+
+\subsection*{Transition rules and an averaged model}
+The 2022 notes tabulate, from the enumeration, the changes of $(L,H,C)$ produced by each choice of picked vertex and neighbour, written with the average numbers of edges per hub and per core. Replacing those averages by fixed fractions gives a three-dimensional averaged recursion for $(L/N,H/N,C/N)$ whose nucleus fraction roughly follows the decay reported in \cite{KR2017} up to $N=5\times10^5$ with parameters fixed at the start. This is a phenomenological model; the exact relations of Appendix~\ref{app:exact} replace it, and the averaged rates are what the closures of Section~\ref{sec:closures} compute from a self-consistent distribution.
+
+\subsection*{Drift of the leaf count and two questions}
+For each model the notes compute, from the enumeration, the probability that the leaf fraction increases at the next step, and its difference from $1/2$ (the drift). Under NR the drift is positive below a leaf fraction of $1/2$ and negative above it, and the distribution concentrates at $1/2$; under CR it is positive almost everywhere, and the distribution moves towards trees with many leaves; under FR it is smaller in absolute value than under CR. The notes ask two questions and answer them from the drifts:
+\begin{enumerate}
+\item \emph{Is there a redirection probability below $1$ that keeps the nucleus sublinear?} Answer given: no.
+\item \emph{Is the geometry of the redirection (hubs with more leaves sprouting more leaves) necessary for the nucleus fraction to vanish?} Answer given: yes.
+\end{enumerate}
+
+\begin{proposition}[Partial redirection]\label{c:prop:partial}
+Under partial redirection with probability $p_r<1$, $\mathbb{E}[C_N]\ge\frac{1-p_r}{2-p_r}N-c_0$ for all $N\ge3$, with $c_0$ depending only on the initial tree.
+\end{proposition}
+
+\begin{proof}
+Non-leaves remain non-leaves, so $C_N$ is non-decreasing. With probability $(1-p_r)L_N/N$ the new vertex is attached directly to a leaf, which becomes a non-leaf. Hence, with $r=1-p_r$ and $x_N=\mathbb{E}[C_N]$, $x_{N+1}\ge x_N+r(1-x_N/N)$. Let $\beta=r/(1+r)$ and $y_N=x_N-\beta N$. Then $y_{N+1}\ge y_N(1-r/N)+r-\beta(1+r)=y_N(1-r/N)$, so $y_N\ge-\max(0,-y_3)$ for all $N\ge3$, and $x_N\ge\beta N-\max(0,-y_3)$.
+\end{proof}
+
+\begin{remark}[Status of the two answers]
+Proposition~\ref{c:prop:partial} proves the answer to the first question: any direct attachment makes the nucleus grow linearly. The answer to the second question holds for FR, but not in general: in DAN and PAN \cite{HKRZ2026} a vertex adjacent to a leaf always redirects to a leaf, so the per-hub geometry is removed, and the nucleus still grows sublinearly (Appendix~\ref{app:van}). What these models share with CR is that a positive fraction of the non-leaves creates no new non-leaf when picked; in the Euler--Lotka equation this is the non-birth share $\kappa/d$.
+\end{remark}
+
+\subsection*{2023: models in one framework}
+The 2023 formula sheets write NR, BA, XR, HR, FR and CR in a common form: for each model, the probability that the maximum degree and the number of non-leaves increase, the resulting expected shifts of the maximum-degree fraction and the non-leaf fraction (drawn as flow fields in the plane of these two fractions, from exact enumeration), and a recurrence for the leaf fraction $f_1[n]$,
+\[
+f_1[n+1]=\frac{1}{n+1}\Bigl(n\,f_1[n]\,(1-p_1[n])+1\Bigr),
+\]
+where $p_1[n]$ is the probability per leaf that the new vertex attaches to it. For NR, $p_1=1/n$ and $f_1[n]=\frac12+\frac{1}{n(n-1)}$; for BA, $f_1$ has a closed form in central binomial coefficients with limit $2/3$; for HR, $p_1=(1-f_1)/(n-1)$, solved through an exact recursion on the number of leaves. For CR the sheets give $p_1=\frac{1}{nL}\sum_{k\in H}\ell_k/d_k$, which is case (b) of Lemma~\ref{c:lem:transitions} divided by the number of leaves; in the step to the final recurrence the factor $1/n$ was lost (the term $\sum_k\ell_k/d_k$ should be divided by $n$, as in Proposition~\ref{c:prop:drift}), and the initial value $f_1[3]=1/3$ in the HR sheet should be $2/3$. The Mathematica implementation of the CR rate used the correct factor. The programs of 2023 also contain random-growth simulations of NR, XR, HR and CR with power-law fits of the degree distributions and Beta-distribution fits for XR, and a one-parameter family of solutions of the leaf recurrence with a term in the Beta function $\mathrm{B}(n-1,x-1)$, which decays like $n^{1-x}$; matching the observed leaf fraction to this family gives an implied exponent $x$. That last route converges slowly: the leaf fraction approaches $1$ at the rate $N^{\mu-1}$, and the fluctuations of $C_N$ enter it directly.
+
+
+
+\end{document}

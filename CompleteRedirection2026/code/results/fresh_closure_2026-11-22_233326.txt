@@ -1,0 +1,11 @@
+=== run started 2026-11-22T23:33:26 LMAX_LIST=[300, 1000, 3000, 10000] KMAX=100 JMAX=10 ===
+Reference: equal sharing 0.568842; proven bracket (Uzay) [0.5650, 0.5665]; simulation ~0.565723
+equal L=300: mu=0.5689880 lam'=0.2154913 q_fresh=0.249067 sum j q=0.234165 mass=0.971369 (15s)
+equal L=1000: mu=0.5688693 lam'=0.2155627 q_fresh=0.249020 sum j q=0.243331 mass=0.985535 (29s)
+equal L=3000: mu=0.5688480 lam'=0.2155754 q_fresh=0.249012 sum j q=0.247758 mass=0.992252 (52s)
+equal L=10000: mu=0.5688434 lam'=0.2155782 q_fresh=0.249010 sum j q=0.250308 mass=0.996093 (160s)
+fresh L=300: mu=0.5684457 lam'=0.1745354 q_fresh=0.253433 sum j q=0.234350 mass=0.971365 (173s)
+fresh L=1000: mu=0.5683260 lam'=0.1746130 q_fresh=0.253385 sum j q=0.243522 mass=0.985524 (193s)
+fresh L=3000: mu=0.5683046 lam'=0.1746268 q_fresh=0.253376 sum j q=0.247952 mass=0.992242 (231s)
+fresh L=10000: mu=0.5683000 lam'=0.1746298 q_fresh=0.253374 sum j q=0.250504 mass=0.996085 (408s)
+done

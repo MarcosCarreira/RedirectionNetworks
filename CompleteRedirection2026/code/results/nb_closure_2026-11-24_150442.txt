@@ -1,0 +1,121 @@
+=== run started 2026-11-24T15:04:42 D_R=10 AMAX=12.0 DBIG=2000 N_IND=400000 ITERS_MAX=24 CONV_TOL=0.0001 PARENT_EXACT=True AGE_MODEL=True CHILD_SUB_AGE=True TAIL=True PCENTRED=True N_PAR=600000 A_FULL=1.5 DBIG_PC=200 OUTSIDE_P=True BANDS=((11, 20), (21, 50), (51, 200)) numba 0.68.0 ===
+Pre-registered (DistributionFormulas_2026-11-23.tex, section 'A closure from the neighbourhood of each vertex'): L2 credit of R-states with q >= 0.005 within 5% of Test D in >= 80%; L3 closed mu within 0.001 of 0.565723 (strong 0.0003)
+L1: solver with the Test D credit: mu = 0.565808 (Test D 0.565808) -> PASS
+L1: with m = 0.33: c(1,1) = 0.1836 (three-vertex model 0.1833), c(0,2) = 0.4087 (0.4076) [Monte Carlo s.e. of order 0.001 at N_IND = 400000] (27s)
+--- L2: one step from the Test D inputs (m = sum q/d = 0.2974) ---
+   state      q(TestD)  c model   c TestD   diff%
+  ( 1, 1)   0.2543   0.1800   0.1769     +1.7
+  ( 2, 1)   0.0878   0.1788   0.1749     +2.3
+  ( 3, 1)   0.0426   0.1737   0.1705     +1.9
+  ( 4, 1)   0.0244   0.1689   0.1649     +2.4
+  ( 5, 1)   0.0155   0.1633   0.1589     +2.8
+  ( 6, 1)   0.0106   0.1605   0.1570     +2.3
+  ( 7, 1)   0.0076   0.1574   0.1508     +4.4
+  ( 8, 1)   0.0056   0.1534   0.1494     +2.7
+  ( 0, 2)   0.1320   0.3992   0.3972     +0.5
+  ( 1, 2)   0.0460   0.5164   0.5115     +0.9
+  ( 2, 2)   0.0284   0.5182   0.5122     +1.2
+  ( 3, 2)   0.0194   0.5134   0.5104     +0.6
+  ( 4, 2)   0.0141   0.5083   0.5025     +1.2
+  ( 5, 2)   0.0107   0.5030   0.4992     +0.8
+  ( 6, 2)   0.0084   0.4971   0.4938     +0.7
+  ( 7, 2)   0.0067   0.4904   0.4916     -0.3
+  ( 8, 2)   0.0055   0.4878   0.4814     +1.3
+  ( 0, 3)   0.0126   0.6602   0.6517     +1.3
+  ( 1, 3)   0.0086   0.7978   0.7935     +0.5
+  ( 2, 3)   0.0072   0.8100   0.8010     +1.1
+  ( 3, 3)   0.0061   0.8159   0.8080     +1.0
+  ( 4, 3)   0.0052   0.8139   0.8010     +1.6
+PRE-REGISTERED L2: 22 of 22 states within 5% (100%) -> PASS
+--- L3: closed iteration from equal sharing (mu = 0.568842) ---
+  P1 tail: T = 0.007748, q(L) L/mu = 0.007744 (+0.05%), tail mean k = 9.285 (Test D overflow row 9.27: +0.2%)
+  S1: overflows 0, Euler-Lotka sum 0.9940, share of parents d >= 51 at ages 0-1 14.11% (measured 14.28%)
+  T: lambda_B 11-20: 0.2433, 21-50: 0.2403, 51-200: 0.2288; T1 parent's own credit (1,1) 0.1769, (0,2) 0.3971
+  iteration 1: m = 0.2926, lambda above the bands and in the tail = 0.17305, c(1,1) = 0.1777, c(0,2) = 0.3999, mu = 0.566150 (131s)
+  P1 tail: T = 0.007890, q(L) L/mu = 0.007887 (+0.04%), tail mean k = 9.308 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0002, share of parents d >= 51 at ages 0-1 14.32% (measured 14.28%)
+  T: lambda_B 11-20: 0.2431, 21-50: 0.2409, 51-200: 0.2298; T1 parent's own credit (1,1) 0.1759, (0,2) 0.3955
+  iteration 2: m = 0.2949, lambda above the bands and in the tail = 0.19566, c(1,1) = 0.1765, c(0,2) = 0.3958, mu = 0.565671 (199s)
+  P1 tail: T = 0.007907, q(L) L/mu = 0.007903 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0011, share of parents d >= 51 at ages 0-1 14.32% (measured 14.28%)
+  T: lambda_B 11-20: 0.2434, 21-50: 0.2410, 51-200: 0.2298; T1 parent's own credit (1,1) 0.1766, (0,2) 0.3955
+  iteration 3: m = 0.2951, lambda above the bands and in the tail = 0.19738, c(1,1) = 0.1768, c(0,2) = 0.3961, mu = 0.565695 (266s)
+  P1 tail: T = 0.007906, q(L) L/mu = 0.007902 (+0.05%), tail mean k = 9.308 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0004, share of parents d >= 51 at ages 0-1 14.27% (measured 14.28%)
+  T: lambda_B 11-20: 0.2435, 21-50: 0.2410, 51-200: 0.2301; T1 parent's own credit (1,1) 0.1763, (0,2) 0.3960
+  iteration 4: m = 0.2951, lambda above the bands and in the tail = 0.19675, c(1,1) = 0.1769, c(0,2) = 0.3961, mu = 0.565702 (333s)
+  P1 tail: T = 0.007906, q(L) L/mu = 0.007902 (+0.05%), tail mean k = 9.308 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0003, share of parents d >= 51 at ages 0-1 14.32% (measured 14.28%)
+  T: lambda_B 11-20: 0.2437, 21-50: 0.2410, 51-200: 0.2300; T1 parent's own credit (1,1) 0.1766, (0,2) 0.3956
+  iteration 5: m = 0.2951, lambda above the bands and in the tail = 0.19874, c(1,1) = 0.1762, c(0,2) = 0.3955, mu = 0.565589 (399s)
+  P1 tail: T = 0.007910, q(L) L/mu = 0.007906 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0016, share of parents d >= 51 at ages 0-1 14.27% (measured 14.28%)
+  T: lambda_B 11-20: 0.2436, 21-50: 0.2411, 51-200: 0.2301; T1 parent's own credit (1,1) 0.1763, (0,2) 0.3955
+  iteration 6: m = 0.2952, lambda above the bands and in the tail = 0.19760, c(1,1) = 0.1767, c(0,2) = 0.3961, mu = 0.565678 (465s)
+  P1 tail: T = 0.007907, q(L) L/mu = 0.007903 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0008, share of parents d >= 51 at ages 0-1 14.27% (measured 14.28%)
+  T: lambda_B 11-20: 0.2436, 21-50: 0.2410, 51-200: 0.2300; T1 parent's own credit (1,1) 0.1761, (0,2) 0.3953
+  iteration 7: m = 0.2951, lambda above the bands and in the tail = 0.19677, c(1,1) = 0.1770, c(0,2) = 0.3967, mu = 0.565744 (531s)
+  P1 tail: T = 0.007904, q(L) L/mu = 0.007900 (+0.05%), tail mean k = 9.308 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0000, share of parents d >= 51 at ages 0-1 14.29% (measured 14.28%)
+  T: lambda_B 11-20: 0.2435, 21-50: 0.2412, 51-200: 0.2301; T1 parent's own credit (1,1) 0.1765, (0,2) 0.3957
+  iteration 8: m = 0.2951, lambda above the bands and in the tail = 0.19656, c(1,1) = 0.1768, c(0,2) = 0.3958, mu = 0.565682 (598s)
+  P1 tail: T = 0.007907, q(L) L/mu = 0.007903 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0004, share of parents d >= 51 at ages 0-1 14.33% (measured 14.28%)
+  T: lambda_B 11-20: 0.2434, 21-50: 0.2410, 51-200: 0.2300; T1 parent's own credit (1,1) 0.1758, (0,2) 0.3949
+  iteration 9: m = 0.2951, lambda above the bands and in the tail = 0.19867, c(1,1) = 0.1761, c(0,2) = 0.3957, mu = 0.565619 (664s)
+  P1 tail: T = 0.007908, q(L) L/mu = 0.007904 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0007, share of parents d >= 51 at ages 0-1 14.37% (measured 14.28%)
+  T: lambda_B 11-20: 0.2433, 21-50: 0.2410, 51-200: 0.2301; T1 parent's own credit (1,1) 0.1764, (0,2) 0.3959
+  iteration 10: m = 0.2952, lambda above the bands and in the tail = 0.19820, c(1,1) = 0.1766, c(0,2) = 0.3954, mu = 0.565630 (736s)
+  P1 tail: T = 0.007909, q(L) L/mu = 0.007905 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0000, share of parents d >= 51 at ages 0-1 14.32% (measured 14.28%)
+  T: lambda_B 11-20: 0.2437, 21-50: 0.2411, 51-200: 0.2299; T1 parent's own credit (1,1) 0.1762, (0,2) 0.3960
+  iteration 11: m = 0.2951, lambda above the bands and in the tail = 0.19801, c(1,1) = 0.1763, c(0,2) = 0.3957, mu = 0.565635 (804s)
+  P1 tail: T = 0.007908, q(L) L/mu = 0.007905 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0003, share of parents d >= 51 at ages 0-1 14.31% (measured 14.28%)
+  T: lambda_B 11-20: 0.2436, 21-50: 0.2413, 51-200: 0.2302; T1 parent's own credit (1,1) 0.1768, (0,2) 0.3958
+  iteration 12: m = 0.2952, lambda above the bands and in the tail = 0.19927, c(1,1) = 0.1760, c(0,2) = 0.3948, mu = 0.565540 (873s)
+  P1 tail: T = 0.007912, q(L) L/mu = 0.007908 (+0.05%), tail mean k = 9.309 (Test D overflow row 9.27: +0.4%)
+  S1: overflows 0, Euler-Lotka sum 1.0015, share of parents d >= 51 at ages 0-1 14.33% (measured 14.28%)
+  T: lambda_B 11-20: 0.2433, 21-50: 0.2410, 51-200: 0.2299; T1 parent's own credit (1,1) 0.1760, (0,2) 0.3959
+  iteration 13: m = 0.2952, lambda above the bands and in the tail = 0.19909, c(1,1) = 0.1764, c(0,2) = 0.3956, mu = 0.565634 (955s)
+  converged: |change| < 0.0001 in 2 consecutive iterations
+  tables of the last iteration written to nb_closure_2026-11-24_150442_tables.npz (added 24 Nov 11:04)
+  one more step from the fixed point with 10 other seeds: mu = 0.565660, 0.565701, 0.565623, 0.565716, 0.565623, 0.565633, 0.565694, 0.565689, 0.565643, 0.565619 (s.d. 0.000037; Monte Carlo error of the closure value)
+PRE-REGISTERED L3: mu = 0.565652 (mean of the last 12 iterations, s.d. 0.000055); mu - 0.565723 = -0.000071 -> STRONG PASS
+PRE-REGISTERED L5: |mu - 0.565723| = 0.000071 against max(3 s.d./sqrt(10), 1e-4) = 0.000100 -> PASS
+PRE-REGISTERED U: L3 mean 0.565652, minus 0.565723 = -0.000071, s.e. 0.000012, z = -6.11 -> gap remains (|z| > 3)
+PRE-REGISTERED U: mean of the other seeds 0.565660, minus 0.565723 = -0.000063, s.e. 0.000012, z = -5.38 -> gap remains (|z| > 3)
+PRE-REGISTERED T1: lambda_big > 0 at every iteration (min 0.17305) -> PASS
+PRE-REGISTERED T2: lambda_B (mean of the last iterations) 11-20: 0.2435 (Test D 0.2438, -0.1%), 21-50: 0.2410 (Test D 0.2412, -0.1%), 51-200: 0.2300 (Test D 0.2302, -0.1%) -> PASS; lambda_big 0.1977 (Test D 0.2118 for 201-1000, 0.1930 for 1001-3000)
+Diagnostic Q (no decision): mean credits on R; tail at k*lambda: lambda = 0.19800, mu = 0.565652; tail at k*0.1692: lambda = 0.21042, mu = 0.565652
+--- L4: closed credit on R (mean of the last iterations) against Test D, states with q >= 0.002 ---
+   state      q(TestD)  c closed  c TestD   diff%
+  ( 1, 1)   0.2543   0.1765   0.1769     -0.2
+  ( 2, 1)   0.0878   0.1749   0.1749     +0.0
+  ( 3, 1)   0.0426   0.1700   0.1705     -0.3
+  ( 4, 1)   0.0244   0.1651   0.1649     +0.1
+  ( 5, 1)   0.0155   0.1608   0.1589     +1.2
+  ( 6, 1)   0.0106   0.1569   0.1570     -0.0
+  ( 7, 1)   0.0076   0.1533   0.1508     +1.6
+  ( 8, 1)   0.0056   0.1505   0.1494     +0.7
+  ( 9, 1)   0.0043   0.1480   0.1487     -0.5
+  ( 0, 2)   0.1320   0.3958   0.3972     -0.4
+  ( 1, 2)   0.0460   0.5114   0.5115     -0.0
+  ( 2, 2)   0.0284   0.5128   0.5122     +0.1
+  ( 3, 2)   0.0194   0.5088   0.5104     -0.3
+  ( 4, 2)   0.0141   0.5034   0.5025     +0.2
+  ( 5, 2)   0.0107   0.4980   0.4992     -0.2
+  ( 6, 2)   0.0084   0.4930   0.4938     -0.1
+  ( 7, 2)   0.0067   0.4878   0.4916     -0.8
+  ( 8, 2)   0.0055   0.4835   0.4814     +0.4
+  ( 0, 3)   0.0126   0.6524   0.6517     +0.1
+  ( 1, 3)   0.0086   0.7896   0.7935     -0.5
+  ( 2, 3)   0.0072   0.8036   0.8010     +0.3
+  ( 3, 3)   0.0061   0.8057   0.8080     -0.3
+  ( 4, 3)   0.0052   0.8051   0.8010     +0.5
+  ( 5, 3)   0.0045   0.8016   0.8065     -0.6
+  ( 6, 3)   0.0039   0.7978   0.8013     -0.4
+  ( 7, 3)   0.0034   0.7939   0.7958     -0.2
+done (1629s)

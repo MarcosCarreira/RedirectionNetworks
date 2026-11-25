@@ -1,0 +1,6 @@
+input red_s1_2026-11-24_210740_cloud.npz
+Crank-Nicolson step 0.008: mu 0.5660980  (2s)
+Crank-Nicolson step 0.004: mu 0.5660934  (4s)
+Crank-Nicolson step 0.002: mu 0.5660932  (6s)
+Crank-Nicolson step 0.001: mu 0.5660932  (11s)
+ratio equations of the same solution 0.566109

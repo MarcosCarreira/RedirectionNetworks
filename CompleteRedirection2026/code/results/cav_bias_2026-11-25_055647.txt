@@ -1,0 +1,88 @@
+=== cav_bias started 2026-11-25T05:56:47 VARIANTS={'N30': (50, 12.0, 30000), 'N100': (50, 12.0, 100000), 'N100L': (50, 12.0, 100000)} LAMS={'N30': 0.23, 'N100': 0.23, 'N100L': 0.2} REPLICAS=4 NBATCH=4 NGEN=5 VALGEN=(2, 3, 4, 5) base point cav_k5_2026-11-24_233354_B.json ===
+Pre-registered (DistributionFormulas, 'Offset of the ratio-equation estimate: run P'): P1, P2 below.
+[N30] replica 0, generation 0 (8s): parent ESS 0.76
+[N30] replica 0, generation 1 (11s): ESS children min 0.94, parents 0.68, output 0.85; mu (E) 0.565857, (R) 0.565874; c(1,1) 0.1774, c(0,2) 0.3990, c(1,2) 0.5093, c(0,3) 0.6476; lambda above the tallied states 0.2117
+[N30] replica 0, generation 2 (8s): ESS children min 0.87, parents 0.70, output 0.86; mu (E) 0.565153, (R) 0.565482; c(1,1) 0.1764, c(0,2) 0.3920, c(1,2) 0.5109, c(0,3) 0.6566; lambda above the tallied states 0.2113
+[N30] replica 0, generation 3 (10s): ESS children min 0.91, parents 0.67, output 0.87; mu (E) 0.565353, (R) 0.565563; c(1,1) 0.1775, c(0,2) 0.3927, c(1,2) 0.5111, c(0,3) 0.6586; lambda above the tallied states 0.2133
+[N30] replica 0, generation 4 (8s): ESS children min 0.88, parents 0.68, output 0.83; mu (E) 0.566293, (R) 0.565884; c(1,1) 0.1789, c(0,2) 0.3937, c(1,2) 0.5146, c(0,3) 0.6633; lambda above the tallied states 0.2075
+[N30] replica 0, generation 5 (7s): ESS children min 0.91, parents 0.69, output 0.84; mu (E) 0.565906, (R) 0.565519; c(1,1) 0.1761, c(0,2) 0.3921, c(1,2) 0.5122, c(0,3) 0.6600; lambda above the tallied states 0.2084
+[N30] replica 1, generation 0 (1s): parent ESS 0.76
+[N30] replica 1, generation 1 (7s): ESS children min 0.89, parents 0.69, output 0.86; mu (E) 0.563952, (R) 0.565447; c(1,1) 0.1754, c(0,2) 0.3931, c(1,2) 0.5115, c(0,3) 0.6552; lambda above the tallied states 0.2141
+[N30] replica 1, generation 2 (7s): ESS children min 0.87, parents 0.69, output 0.86; mu (E) 0.565735, (R) 0.565690; c(1,1) 0.1762, c(0,2) 0.3957, c(1,2) 0.5118, c(0,3) 0.6582; lambda above the tallied states 0.2116
+[N30] replica 1, generation 3 (7s): ESS children min 0.92, parents 0.67, output 0.86; mu (E) 0.564208, (R) 0.565540; c(1,1) 0.1752, c(0,2) 0.3946, c(1,2) 0.5111, c(0,3) 0.6640; lambda above the tallied states 0.2142
+[N30] replica 1, generation 4 (7s): ESS children min 0.85, parents 0.69, output 0.84; mu (E) 0.564258, (R) 0.565603; c(1,1) 0.1775, c(0,2) 0.3926, c(1,2) 0.5136, c(0,3) 0.6562; lambda above the tallied states 0.2098
+[N30] replica 1, generation 5 (7s): ESS children min 0.93, parents 0.68, output 0.85; mu (E) 0.566333, (R) 0.565987; c(1,1) 0.1768, c(0,2) 0.3989, c(1,2) 0.5134, c(0,3) 0.6562; lambda above the tallied states 0.2090
+[N30] replica 2, generation 0 (1s): parent ESS 0.76
+[N30] replica 2, generation 1 (7s): ESS children min 0.90, parents 0.69, output 0.86; mu (E) 0.565083, (R) 0.565497; c(1,1) 0.1740, c(0,2) 0.3949, c(1,2) 0.5115, c(0,3) 0.6673; lambda above the tallied states 0.2134
+[N30] replica 2, generation 2 (7s): ESS children min 0.91, parents 0.69, output 0.86; mu (E) 0.566631, (R) 0.565798; c(1,1) 0.1779, c(0,2) 0.3965, c(1,2) 0.5126, c(0,3) 0.6488; lambda above the tallied states 0.2109
+[N30] replica 2, generation 3 (9s): ESS children min 0.46, parents 0.68, output 0.84; mu (E) 0.566216, (R) 0.565738; c(1,1) 0.1765, c(0,2) 0.3969, c(1,2) 0.5106, c(0,3) 0.6553; lambda above the tallied states 0.2122
+[N30] replica 2, generation 4 (7s): ESS children min 0.83, parents 0.68, output 0.86; mu (E) 0.566864, (R) 0.566236; c(1,1) 0.1782, c(0,2) 0.4024, c(1,2) 0.5135, c(0,3) 0.6516; lambda above the tallied states 0.2094
+[N30] replica 2, generation 5 (7s): ESS children min 0.92, parents 0.70, output 0.84; mu (E) 0.565714, (R) 0.565734; c(1,1) 0.1768, c(0,2) 0.3963, c(1,2) 0.5096, c(0,3) 0.6559; lambda above the tallied states 0.2090
+[N30] replica 3, generation 0 (1s): parent ESS 0.77
+[N30] replica 3, generation 1 (7s): ESS children min 0.94, parents 0.68, output 0.85; mu (E) 0.564927, (R) 0.565869; c(1,1) 0.1777, c(0,2) 0.3974, c(1,2) 0.5114, c(0,3) 0.6479; lambda above the tallied states 0.2091
+[N30] replica 3, generation 2 (7s): ESS children min 0.89, parents 0.68, output 0.84; mu (E) 0.566995, (R) 0.565936; c(1,1) 0.1775, c(0,2) 0.3975, c(1,2) 0.5153, c(0,3) 0.6559; lambda above the tallied states 0.2076
+[N30] replica 3, generation 3 (7s): ESS children min 0.91, parents 0.64, output 0.85; mu (E) 0.564716, (R) 0.565587; c(1,1) 0.1760, c(0,2) 0.3942, c(1,2) 0.5133, c(0,3) 0.6548; lambda above the tallied states 0.2107
+[N30] replica 3, generation 4 (7s): ESS children min 0.71, parents 0.58, output 0.86; mu (E) 0.565656, (R) 0.565242; c(1,1) 0.1750, c(0,2) 0.3926, c(1,2) 0.5069, c(0,3) 0.6406; lambda above the tallied states 0.2155
+[N30] replica 3, generation 5 (7s): ESS children min 0.91, parents 0.69, output 0.80; mu (E) 0.567107, (R) 0.565946; c(1,1) 0.1796, c(0,2) 0.3965, c(1,2) 0.5120, c(0,3) 0.6483; lambda above the tallied states 0.2096
+[N100] replica 0, generation 0 (7s): parent ESS 0.76
+[N100] replica 0, generation 1 (25s): ESS children min 0.95, parents 0.69, output 0.84; mu (E) 0.565985, (R) 0.565772; c(1,1) 0.1764, c(0,2) 0.3974, c(1,2) 0.5115, c(0,3) 0.6566; lambda above the tallied states 0.2121
+[N100] replica 0, generation 2 (22s): ESS children min 0.93, parents 0.69, output 0.85; mu (E) 0.565096, (R) 0.565704; c(1,1) 0.1761, c(0,2) 0.3968, c(1,2) 0.5102, c(0,3) 0.6564; lambda above the tallied states 0.2128
+[N100] replica 0, generation 3 (22s): ESS children min 0.92, parents 0.69, output 0.84; mu (E) 0.565421, (R) 0.565745; c(1,1) 0.1759, c(0,2) 0.3967, c(1,2) 0.5131, c(0,3) 0.6588; lambda above the tallied states 0.2108
+[N100] replica 0, generation 4 (22s): ESS children min 0.94, parents 0.69, output 0.85; mu (E) 0.566681, (R) 0.565875; c(1,1) 0.1780, c(0,2) 0.3969, c(1,2) 0.5126, c(0,3) 0.6500; lambda above the tallied states 0.2087
+[N100] replica 0, generation 5 (22s): ESS children min 0.94, parents 0.69, output 0.85; mu (E) 0.566190, (R) 0.565777; c(1,1) 0.1775, c(0,2) 0.3955, c(1,2) 0.5115, c(0,3) 0.6557; lambda above the tallied states 0.2094
+[N100] replica 1, generation 0 (2s): parent ESS 0.76
+[N100] replica 1, generation 1 (22s): ESS children min 0.93, parents 0.67, output 0.81; mu (E) 0.566093, (R) 0.566120; c(1,1) 0.1789, c(0,2) 0.3981, c(1,2) 0.5143, c(0,3) 0.6648; lambda above the tallied states 0.2069
+[N100] replica 1, generation 2 (22s): ESS children min 0.92, parents 0.66, output 0.86; mu (E) 0.565300, (R) 0.565463; c(1,1) 0.1759, c(0,2) 0.3931, c(1,2) 0.5121, c(0,3) 0.6551; lambda above the tallied states 0.2126
+[N100] replica 1, generation 3 (22s): ESS children min 0.92, parents 0.70, output 0.87; mu (E) 0.564816, (R) 0.565561; c(1,1) 0.1759, c(0,2) 0.3953, c(1,2) 0.5103, c(0,3) 0.6541; lambda above the tallied states 0.2145
+[N100] replica 1, generation 4 (22s): ESS children min 0.93, parents 0.68, output 0.86; mu (E) 0.565859, (R) 0.565698; c(1,1) 0.1764, c(0,2) 0.3963, c(1,2) 0.5111, c(0,3) 0.6568; lambda above the tallied states 0.2126
+[N100] replica 1, generation 5 (22s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.565294, (R) 0.565708; c(1,1) 0.1768, c(0,2) 0.3955, c(1,2) 0.5123, c(0,3) 0.6547; lambda above the tallied states 0.2106
+[N100] replica 2, generation 0 (2s): parent ESS 0.76
+[N100] replica 2, generation 1 (21s): ESS children min 0.91, parents 0.67, output 0.86; mu (E) 0.565378, (R) 0.565752; c(1,1) 0.1767, c(0,2) 0.3961, c(1,2) 0.5122, c(0,3) 0.6560; lambda above the tallied states 0.2106
+[N100] replica 2, generation 2 (21s): ESS children min 0.91, parents 0.69, output 0.85; mu (E) 0.565372, (R) 0.565732; c(1,1) 0.1761, c(0,2) 0.3968, c(1,2) 0.5111, c(0,3) 0.6528; lambda above the tallied states 0.2102
+[N100] replica 2, generation 3 (21s): ESS children min 0.90, parents 0.69, output 0.86; mu (E) 0.565929, (R) 0.565830; c(1,1) 0.1774, c(0,2) 0.3968, c(1,2) 0.5112, c(0,3) 0.6524; lambda above the tallied states 0.2093
+[N100] replica 2, generation 4 (22s): ESS children min 0.94, parents 0.70, output 0.84; mu (E) 0.565365, (R) 0.565690; c(1,1) 0.1760, c(0,2) 0.3968, c(1,2) 0.5093, c(0,3) 0.6545; lambda above the tallied states 0.2119
+[N100] replica 2, generation 5 (21s): ESS children min 0.93, parents 0.70, output 0.71; mu (E) 0.565389, (R) 0.565646; c(1,1) 0.1764, c(0,2) 0.3953, c(1,2) 0.5117, c(0,3) 0.6499; lambda above the tallied states 0.2122
+[N100] replica 3, generation 0 (2s): parent ESS 0.76
+[N100] replica 3, generation 1 (22s): ESS children min 0.94, parents 0.68, output 0.84; mu (E) 0.564969, (R) 0.565564; c(1,1) 0.1760, c(0,2) 0.3956, c(1,2) 0.5100, c(0,3) 0.6508; lambda above the tallied states 0.2145
+[N100] replica 3, generation 2 (21s): ESS children min 0.76, parents 0.70, output 0.83; mu (E) 0.566557, (R) 0.566032; c(1,1) 0.1777, c(0,2) 0.3988, c(1,2) 0.5134, c(0,3) 0.6602; lambda above the tallied states 0.2089
+[N100] replica 3, generation 3 (21s): ESS children min 0.41, parents 0.69, output 0.85; mu (E) 0.565469, (R) 0.565731; c(1,1) 0.1767, c(0,2) 0.3959, c(1,2) 0.5127, c(0,3) 0.6546; lambda above the tallied states 0.2101
+[N100] replica 3, generation 4 (21s): ESS children min 0.86, parents 0.68, output 0.85; mu (E) 0.565937, (R) 0.565603; c(1,1) 0.1755, c(0,2) 0.3956, c(1,2) 0.5112, c(0,3) 0.6507; lambda above the tallied states 0.2119
+[N100] replica 3, generation 5 (21s): ESS children min 0.88, parents 0.69, output 0.85; mu (E) 0.565630, (R) 0.565653; c(1,1) 0.1765, c(0,2) 0.3944, c(1,2) 0.5115, c(0,3) 0.6588; lambda above the tallied states 0.2107
+[N100L] replica 0, generation 0 (7s): parent ESS 0.76
+[N100L] replica 0, generation 1 (24s): ESS children min 0.95, parents 0.69, output 0.86; mu (E) 0.565626, (R) 0.565494; c(1,1) 0.1751, c(0,2) 0.3950, c(1,2) 0.5104, c(0,3) 0.6505; lambda above the tallied states 0.2141
+[N100L] replica 0, generation 2 (22s): ESS children min 0.92, parents 0.69, output 0.84; mu (E) 0.565804, (R) 0.565805; c(1,1) 0.1761, c(0,2) 0.3977, c(1,2) 0.5126, c(0,3) 0.6544; lambda above the tallied states 0.2104
+[N100L] replica 0, generation 3 (22s): ESS children min 0.90, parents 0.69, output 0.85; mu (E) 0.566652, (R) 0.565910; c(1,1) 0.1771, c(0,2) 0.3978, c(1,2) 0.5135, c(0,3) 0.6557; lambda above the tallied states 0.2089
+[N100L] replica 0, generation 4 (22s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.565641, (R) 0.565823; c(1,1) 0.1771, c(0,2) 0.3970, c(1,2) 0.5116, c(0,3) 0.6539; lambda above the tallied states 0.2104
+[N100L] replica 0, generation 5 (22s): ESS children min 0.93, parents 0.68, output 0.83; mu (E) 0.565862, (R) 0.565917; c(1,1) 0.1769, c(0,2) 0.3986, c(1,2) 0.5124, c(0,3) 0.6528; lambda above the tallied states 0.2091
+[N100L] replica 1, generation 0 (2s): parent ESS 0.76
+[N100L] replica 1, generation 1 (22s): ESS children min 0.93, parents 0.68, output 0.86; mu (E) 0.565760, (R) 0.565731; c(1,1) 0.1761, c(0,2) 0.3963, c(1,2) 0.5123, c(0,3) 0.6597; lambda above the tallied states 0.2108
+[N100L] replica 1, generation 2 (22s): ESS children min 0.92, parents 0.69, output 0.86; mu (E) 0.565964, (R) 0.565659; c(1,1) 0.1767, c(0,2) 0.3954, c(1,2) 0.5111, c(0,3) 0.6503; lambda above the tallied states 0.2116
+[N100L] replica 1, generation 3 (22s): ESS children min 0.92, parents 0.68, output 0.84; mu (E) 0.565313, (R) 0.565782; c(1,1) 0.1776, c(0,2) 0.3956, c(1,2) 0.5109, c(0,3) 0.6586; lambda above the tallied states 0.2101
+[N100L] replica 1, generation 4 (22s): ESS children min 0.92, parents 0.69, output 0.84; mu (E) 0.565726, (R) 0.565887; c(1,1) 0.1763, c(0,2) 0.3989, c(1,2) 0.5121, c(0,3) 0.6538; lambda above the tallied states 0.2098
+[N100L] replica 1, generation 5 (22s): ESS children min 0.89, parents 0.68, output 0.86; mu (E) 0.565444, (R) 0.565599; c(1,1) 0.1757, c(0,2) 0.3956, c(1,2) 0.5110, c(0,3) 0.6505; lambda above the tallied states 0.2112
+[N100L] replica 2, generation 0 (2s): parent ESS 0.76
+[N100L] replica 2, generation 1 (22s): ESS children min 0.91, parents 0.68, output 0.86; mu (E) 0.565248, (R) 0.565649; c(1,1) 0.1765, c(0,2) 0.3951, c(1,2) 0.5112, c(0,3) 0.6525; lambda above the tallied states 0.2112
+[N100L] replica 2, generation 2 (22s): ESS children min 0.91, parents 0.69, output 0.86; mu (E) 0.565559, (R) 0.565636; c(1,1) 0.1767, c(0,2) 0.3948, c(1,2) 0.5116, c(0,3) 0.6496; lambda above the tallied states 0.2111
+[N100L] replica 2, generation 3 (22s): ESS children min 0.74, parents 0.69, output 0.85; mu (E) 0.565465, (R) 0.565639; c(1,1) 0.1764, c(0,2) 0.3952, c(1,2) 0.5101, c(0,3) 0.6583; lambda above the tallied states 0.2125
+[N100L] replica 2, generation 4 (22s): ESS children min 0.89, parents 0.69, output 0.81; mu (E) 0.565950, (R) 0.565720; c(1,1) 0.1774, c(0,2) 0.3949, c(1,2) 0.5096, c(0,3) 0.6574; lambda above the tallied states 0.2092
+[N100L] replica 2, generation 5 (22s): ESS children min 0.92, parents 0.69, output 0.86; mu (E) 0.564675, (R) 0.565455; c(1,1) 0.1759, c(0,2) 0.3936, c(1,2) 0.5089, c(0,3) 0.6493; lambda above the tallied states 0.2129
+[N100L] replica 3, generation 0 (2s): parent ESS 0.76
+[N100L] replica 3, generation 1 (23s): ESS children min 0.94, parents 0.68, output 0.85; mu (E) 0.565232, (R) 0.565550; c(1,1) 0.1760, c(0,2) 0.3954, c(1,2) 0.5097, c(0,3) 0.6519; lambda above the tallied states 0.2147
+[N100L] replica 3, generation 2 (27s): ESS children min 0.76, parents 0.70, output 0.85; mu (E) 0.565233, (R) 0.565572; c(1,1) 0.1754, c(0,2) 0.3962, c(1,2) 0.5088, c(0,3) 0.6496; lambda above the tallied states 0.2138
+[N100L] replica 3, generation 3 (22s): ESS children min 0.66, parents 0.69, output 0.85; mu (E) 0.565550, (R) 0.565584; c(1,1) 0.1769, c(0,2) 0.3936, c(1,2) 0.5104, c(0,3) 0.6531; lambda above the tallied states 0.2114
+[N100L] replica 3, generation 4 (23s): ESS children min 0.93, parents 0.69, output 0.85; mu (E) 0.565900, (R) 0.565688; c(1,1) 0.1758, c(0,2) 0.3959, c(1,2) 0.5108, c(0,3) 0.6593; lambda above the tallied states 0.2115
+[N100L] replica 3, generation 5 (23s): ESS children min 0.93, parents 0.68, output 0.86; mu (E) 0.565909, (R) 0.565799; c(1,1) 0.1770, c(0,2) 0.3972, c(1,2) 0.5127, c(0,3) 0.6480; lambda above the tallied states 0.2104
+[N30] (E) value 0.565821, s.e. 0.000269; slope over generations +1.05e-04 (s.e. 2.69e-04)
+[N30] (R) value 0.565718, s.e. 0.000061; slope over generations +3.44e-05 (s.e. 3.63e-05)
+[N100] (E) value 0.565644, s.e. 0.000138; slope over generations +6.85e-05 (s.e. 1.17e-04)
+[N100] (R) value 0.565716, s.e. 0.000038; slope over generations -1.11e-05 (s.e. 2.65e-06)
+[N100L] (E) value 0.565665, s.e. 0.000120; slope over generations -4.44e-05 (s.e. 7.33e-05)
+[N100L] (R) value 0.565717, s.e. 0.000055; slope over generations +1.25e-05 (s.e. 2.51e-05)
+[B300] (E) value 0.565784, s.e. 0.000125; slope over generations +6.10e-05 (s.e. 1.12e-04)
+[B300] (R) value 0.565782, s.e. 0.000021; slope over generations -2.63e-06 (s.e. 2.18e-05)
+minimum effective sample size in this run 0.41
+PRE-REGISTERED P1 (R): mu_inf 0.565781 (s.e. 0.000023), bias at 3e5 -0.000009 (s.e. 0.000007) -> no finite-population bias resolved; mu_inf - 0.565723 = +0.000058, z = +2.48 -> no agreement
+PRE-REGISTERED P1 (E): mu_inf 0.565726 (s.e. 0.000126), bias at 3e5 +0.000002 (s.e. 0.000033) -> no finite-population bias resolved; mu_inf - 0.565723 = +0.000003, z = +0.03 -> agreement
+PRE-REGISTERED P2 (R): mu(lambda 0.20) - mu(lambda 0.230) = +0.000002 against 0.000132 -> no effect resolved; per 0.01 of lambda -0.000001
+PRE-REGISTERED P2 (E): mu(lambda 0.20) - mu(lambda 0.230) = +0.000021 against 0.000366 -> no effect resolved; per 0.01 of lambda -0.000007
+done (1077s)

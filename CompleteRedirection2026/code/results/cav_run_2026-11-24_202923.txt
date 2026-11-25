@@ -1,0 +1,47 @@
+=== cav_run started 2026-11-24T20:29:23 NREC=300000 NV=300000 NGEN=8 LAST=(6, 7, 8) REPLICAS=4 DSTAR=50 H=12.0 TCAP=24.0 KEYMAX=11 tables nb_closure_2026-11-24_150442_tables.npz ===
+Pre-registered (DistributionFormulas, 'Cavity solver: production run, pre-registered', 20:26 BRT): K2, K3, K4 below; K5 in a later run.
+replica 0, generation 0 (14s): parent ESS 0.76
+replica 0, generation 1 (35s): ESS children min 0.95, parents 0.68, output 0.85; mu (E) 0.566457, (R) 0.565585; c(1,1) 0.1756, c(2,1) 0.1736, c(0,2) 0.3960, c(1,2) 0.5106, c(0,3) 0.6475; lambda above degree 49 0.2139
+replica 0, generation 2 (28s): ESS children min 0.87, parents 0.69, output 0.83; mu (E) 0.564863, (R) 0.565781; c(1,1) 0.1771, c(2,1) 0.1757, c(0,2) 0.3958, c(1,2) 0.5114, c(0,3) 0.6592; lambda above degree 49 0.2101
+replica 0, generation 3 (28s): ESS children min 0.88, parents 0.66, output 0.86; mu (E) 0.566036, (R) 0.565882; c(1,1) 0.1769, c(2,1) 0.1764, c(0,2) 0.3977, c(1,2) 0.5116, c(0,3) 0.6547; lambda above degree 49 0.2089
+replica 0, generation 4 (29s): ESS children min 0.92, parents 0.63, output 0.85; mu (E) 0.566001, (R) 0.565754; c(1,1) 0.1762, c(2,1) 0.1756, c(0,2) 0.3968, c(1,2) 0.5112, c(0,3) 0.6534; lambda above degree 49 0.2097
+replica 0, generation 5 (29s): ESS children min 0.91, parents 0.68, output 0.85; mu (E) 0.565743, (R) 0.565750; c(1,1) 0.1770, c(2,1) 0.1740, c(0,2) 0.3955, c(1,2) 0.5123, c(0,3) 0.6615; lambda above degree 49 0.2118
+replica 0, generation 6 (29s): ESS children min 0.93, parents 0.69, output 0.86; mu (E) 0.565102, (R) 0.565681; c(1,1) 0.1763, c(2,1) 0.1751, c(0,2) 0.3953, c(1,2) 0.5118, c(0,3) 0.6603; lambda above degree 49 0.2116
+replica 0, generation 7 (29s): ESS children min 0.92, parents 0.68, output 0.86; mu (E) 0.565124, (R) 0.565620; c(1,1) 0.1758, c(2,1) 0.1739, c(0,2) 0.3957, c(1,2) 0.5118, c(0,3) 0.6544; lambda above degree 49 0.2131
+replica 0, generation 8 (29s): ESS children min 0.90, parents 0.69, output 0.85; mu (E) 0.565569, (R) 0.565873; c(1,1) 0.1769, c(2,1) 0.1759, c(0,2) 0.3972, c(1,2) 0.5136, c(0,3) 0.6604; lambda above degree 49 0.2102
+replica 1, generation 0 (8s): parent ESS 0.76
+replica 1, generation 1 (29s): ESS children min 0.95, parents 0.67, output 0.86; mu (E) 0.565220, (R) 0.565583; c(1,1) 0.1763, c(2,1) 0.1750, c(0,2) 0.3951, c(1,2) 0.5094, c(0,3) 0.6484; lambda above degree 49 0.2126
+replica 1, generation 2 (30s): ESS children min 0.89, parents 0.69, output 0.82; mu (E) 0.566264, (R) 0.566008; c(1,1) 0.1775, c(2,1) 0.1757, c(0,2) 0.3987, c(1,2) 0.5137, c(0,3) 0.6547; lambda above degree 49 0.2085
+replica 1, generation 3 (29s): ESS children min 0.91, parents 0.69, output 0.86; mu (E) 0.566389, (R) 0.565721; c(1,1) 0.1762, c(2,1) 0.1752, c(0,2) 0.3960, c(1,2) 0.5124, c(0,3) 0.6610; lambda above degree 49 0.2106
+replica 1, generation 4 (29s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.565645, (R) 0.565854; c(1,1) 0.1772, c(2,1) 0.1748, c(0,2) 0.3976, c(1,2) 0.5110, c(0,3) 0.6559; lambda above degree 49 0.2100
+replica 1, generation 5 (29s): ESS children min 0.91, parents 0.68, output 0.86; mu (E) 0.565692, (R) 0.565767; c(1,1) 0.1768, c(2,1) 0.1748, c(0,2) 0.3967, c(1,2) 0.5105, c(0,3) 0.6572; lambda above degree 49 0.2104
+replica 1, generation 6 (29s): ESS children min 0.91, parents 0.68, output 0.85; mu (E) 0.565839, (R) 0.565653; c(1,1) 0.1757, c(2,1) 0.1741, c(0,2) 0.3961, c(1,2) 0.5117, c(0,3) 0.6568; lambda above degree 49 0.2116
+replica 1, generation 7 (29s): ESS children min 0.93, parents 0.67, output 0.85; mu (E) 0.565569, (R) 0.565764; c(1,1) 0.1767, c(2,1) 0.1737, c(0,2) 0.3969, c(1,2) 0.5110, c(0,3) 0.6555; lambda above degree 49 0.2118
+replica 1, generation 8 (29s): ESS children min 0.85, parents 0.69, output 0.86; mu (E) 0.566599, (R) 0.565846; c(1,1) 0.1775, c(2,1) 0.1765, c(0,2) 0.3964, c(1,2) 0.5119, c(0,3) 0.6557; lambda above degree 49 0.2083
+replica 2, generation 0 (7s): parent ESS 0.76
+replica 2, generation 1 (29s): ESS children min 0.92, parents 0.68, output 0.85; mu (E) 0.566685, (R) 0.565785; c(1,1) 0.1771, c(2,1) 0.1752, c(0,2) 0.3968, c(1,2) 0.5119, c(0,3) 0.6516; lambda above degree 49 0.2105
+replica 2, generation 2 (29s): ESS children min 0.93, parents 0.69, output 0.85; mu (E) 0.565793, (R) 0.565670; c(1,1) 0.1763, c(2,1) 0.1746, c(0,2) 0.3948, c(1,2) 0.5134, c(0,3) 0.6608; lambda above degree 49 0.2110
+replica 2, generation 3 (30s): ESS children min 0.89, parents 0.69, output 0.86; mu (E) 0.565198, (R) 0.565726; c(1,1) 0.1769, c(2,1) 0.1751, c(0,2) 0.3959, c(1,2) 0.5115, c(0,3) 0.6525; lambda above degree 49 0.2109
+replica 2, generation 4 (29s): ESS children min 0.93, parents 0.69, output 0.86; mu (E) 0.566804, (R) 0.565816; c(1,1) 0.1770, c(2,1) 0.1751, c(0,2) 0.3967, c(1,2) 0.5121, c(0,3) 0.6558; lambda above degree 49 0.2103
+replica 2, generation 5 (30s): ESS children min 0.93, parents 0.69, output 0.84; mu (E) 0.565610, (R) 0.565716; c(1,1) 0.1763, c(2,1) 0.1756, c(0,2) 0.3955, c(1,2) 0.5124, c(0,3) 0.6574; lambda above degree 49 0.2107
+replica 2, generation 6 (30s): ESS children min 0.90, parents 0.65, output 0.85; mu (E) 0.566243, (R) 0.565795; c(1,1) 0.1778, c(2,1) 0.1757, c(0,2) 0.3957, c(1,2) 0.5116, c(0,3) 0.6508; lambda above degree 49 0.2096
+replica 2, generation 7 (29s): ESS children min 0.93, parents 0.69, output 0.43; mu (E) 0.564765, (R) 0.565981; c(1,1) 0.1773, c(2,1) 0.1757, c(0,2) 0.3994, c(1,2) 0.5119, c(0,3) 0.6575; lambda above degree 49 0.2095
+replica 2, generation 8 (29s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.566117, (R) 0.565692; c(1,1) 0.1762, c(2,1) 0.1745, c(0,2) 0.3960, c(1,2) 0.5110, c(0,3) 0.6559; lambda above degree 49 0.2101
+replica 3, generation 0 (7s): parent ESS 0.76
+replica 3, generation 1 (29s): ESS children min 0.95, parents 0.68, output 0.85; mu (E) 0.566858, (R) 0.565622; c(1,1) 0.1758, c(2,1) 0.1735, c(0,2) 0.3957, c(1,2) 0.5109, c(0,3) 0.6589; lambda above degree 49 0.2133
+replica 3, generation 2 (29s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.566124, (R) 0.565669; c(1,1) 0.1757, c(2,1) 0.1735, c(0,2) 0.3973, c(1,2) 0.5103, c(0,3) 0.6500; lambda above degree 49 0.2129
+replica 3, generation 3 (29s): ESS children min 0.75, parents 0.68, output 0.86; mu (E) 0.565027, (R) 0.565739; c(1,1) 0.1766, c(2,1) 0.1759, c(0,2) 0.3963, c(1,2) 0.5115, c(0,3) 0.6500; lambda above degree 49 0.2098
+replica 3, generation 4 (29s): ESS children min 0.87, parents 0.69, output 0.80; mu (E) 0.565796, (R) 0.565754; c(1,1) 0.1762, c(2,1) 0.1742, c(0,2) 0.3971, c(1,2) 0.5119, c(0,3) 0.6570; lambda above degree 49 0.2114
+replica 3, generation 5 (29s): ESS children min 0.93, parents 0.66, output 0.86; mu (E) 0.567778, (R) 0.565881; c(1,1) 0.1778, c(2,1) 0.1755, c(0,2) 0.3967, c(1,2) 0.5116, c(0,3) 0.6580; lambda above degree 49 0.2089
+replica 3, generation 6 (29s): ESS children min 0.92, parents 0.69, output 0.85; mu (E) 0.565953, (R) 0.565723; c(1,1) 0.1765, c(2,1) 0.1748, c(0,2) 0.3963, c(1,2) 0.5118, c(0,3) 0.6530; lambda above degree 49 0.2104
+replica 3, generation 7 (30s): ESS children min 0.78, parents 0.68, output 0.85; mu (E) 0.565151, (R) 0.565868; c(1,1) 0.1770, c(2,1) 0.1757, c(0,2) 0.3973, c(1,2) 0.5126, c(0,3) 0.6590; lambda above degree 49 0.2095
+replica 3, generation 8 (29s): ESS children min 0.93, parents 0.68, output 0.85; mu (E) 0.565401, (R) 0.565593; c(1,1) 0.1762, c(2,1) 0.1745, c(0,2) 0.3943, c(1,2) 0.5114, c(0,3) 0.6557; lambda above degree 49 0.2109
+(E) replica values 0.565265, 0.566002, 0.565709, 0.565501; mean 0.565619, s.e. 0.000157
+PRE-REGISTERED K2 (E): generations (6, 7, 8) within 2 replica s.d. of each replica's mean -> FAIL
+PRE-REGISTERED K4 (E): mu - 0.565723 = -0.000104, z = -0.66 -> agreement
+(R) replica values 0.565725, 0.565755, 0.565823, 0.565728; mean 0.565758, s.e. 0.000023
+PRE-REGISTERED K2 (R): generations (6, 7, 8) within 2 replica s.d. of each replica's mean -> FAIL
+PRE-REGISTERED K4 (R): mu - 0.565723 = +0.000035, z = +1.52 -> agreement
+PRE-REGISTERED K4 (E against R): difference -0.000138, z = -0.87 -> agree
+PRE-REGISTERED K3: minimum effective sample size 0.43 -> PASS
+done (972s)
